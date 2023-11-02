@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "1f71bc8f-788e-4053-86c4-e1a8570be01d",
+		"name": "proShop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20269225"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "getAllProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/6534ef7923ed83287face284",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"6534ef7923ed83287face284"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "product crud"
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "admin",
+					"item": [
+						{
+							"name": "getUsers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteUser",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getUserById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateUserById",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"tarun\",\r\n    \"email\": \"tarun@email.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserProfile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUserProfile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"admin\",\r\n    \"email\": \"admin@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
