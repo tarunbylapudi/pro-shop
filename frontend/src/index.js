@@ -15,12 +15,14 @@ import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import store from "./store";
 import { Provider } from "react-redux";
+import CartPage from "./pages/CartPage";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" index={true} element={<HomePage />} />
       <Route path="/product/:id" element={<ProductPage />} />
+      <Route path="/cart" element={<CartPage />} />
     </Route>
   )
 );
