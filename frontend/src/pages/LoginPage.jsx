@@ -5,19 +5,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../slices/authApiSlice";
 import { addUserToLocal } from "../slices/authSlice";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userInfo = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (userInfo) {
+    if (user) {
       navigate("/");
     }
-  }, [userInfo, navigate]);
+  }, [user, navigate]);
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -27,7 +28,9 @@ const LoginPage = () => {
       const res = await login({ email, password }).unwrap();
       dispatch(addUserToLocal(res));
       navigate("/register");
-    } catch (error) {}
+    } catch (error) {
+      toast.error(`${error.error}`);
+    }
   };
 
   return (
