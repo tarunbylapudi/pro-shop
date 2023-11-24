@@ -19,7 +19,9 @@ function Header() {
     try {
       await logout().unwrap();
       dispatch(deleteUserFromLocal());
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <header>

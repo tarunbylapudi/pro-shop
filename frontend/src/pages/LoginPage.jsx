@@ -29,7 +29,7 @@ const LoginPage = () => {
       dispatch(addUserToLocal(res));
       navigate("/register");
     } catch (error) {
-      toast.error(`${error.error}`);
+      toast.error(`${error.data.error}`);
     }
   };
 
@@ -64,7 +64,7 @@ const LoginPage = () => {
       </Form>
       <Row className="mt-2">
         <Col>
-          <Link to={"/register"}>New Customer?</Link>
+          <Link to={"/register"}>New Customer ? login</Link>
         </Col>
       </Row>
     </FormLayout>
