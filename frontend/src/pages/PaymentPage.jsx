@@ -10,8 +10,7 @@ const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cart = useSelector((state) => state.cart);
-  const {shippingAddress} = cart;
+  const { shippingAddress } = useSelector((state) => state.cart);
 
   useEffect(() => {
     if (!shippingAddress.address) {
@@ -24,7 +23,7 @@ const PaymentPage = () => {
     dispatch(savePaymentMethod(paymentMethod));
     navigate("/placeOrder");
   };
-  
+
   return (
     <FormLayout>
       <CheckoutSteps step1 step2 step3 />

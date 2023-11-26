@@ -12,7 +12,7 @@ const ShippingPage = () => {
 
     const [address, setAddress] = useState(shippingAddress?.address||"");
     const [city, setCity] = useState(shippingAddress?.city||"");
-    const [pincode, setPincode] = useState(shippingAddress?.pincode||"");
+    const [postalCode, setPostalCode] = useState(shippingAddress?.postalCode||"");
     const [country, setCountry] = useState(shippingAddress?.country||"");
 
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const ShippingPage = () => {
 
     const saveActionHandler=(event) => {
         event.preventDefault()
-        dispatch(saveShippingAddress({address,city,pincode,country}))
+        dispatch(saveShippingAddress({address,city,postalCode,country}))
         navigate("/payment")
     }
   return (
@@ -51,8 +51,8 @@ const ShippingPage = () => {
           <Form.Control
             type="text"
             placeholder="Enter pincode"
-            value={pincode}
-            onChange={(x) => setPincode(x.target.value)}
+            value={postalCode}
+            onChange={(x) => setPostalCode(x.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="country" className="my-2">

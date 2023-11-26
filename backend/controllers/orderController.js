@@ -36,7 +36,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
 
   const createdOrder = await order.save();
 
-  res.status(201).json(createOrder);
+  res.status(201).json(createdOrder);
 });
 
 //@desc get logged in user orders

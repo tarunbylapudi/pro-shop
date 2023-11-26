@@ -38,8 +38,8 @@ const CartPage = () => {
           </Message>
         ) : (
           <ListGroup variant="flush">
-            {cartItems.map((item) => (
-              <ListGroup.Item>
+            {cartItems.map((item,index) => (
+              <ListGroup.Item key={index}>
                 <Row>
                   <Col md={2}>
                     <Image src={item.image} alt={item.image} fluid rounded />
