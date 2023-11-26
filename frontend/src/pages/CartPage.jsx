@@ -24,6 +24,9 @@ const CartPage = () => {
   const deleteFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
+  const checkoutHandler = () => {
+    navigate('/shipping');
+  }
   return (
     <Row>
       <Col md={8}>
@@ -85,6 +88,7 @@ const CartPage = () => {
                 type="button"
                 className="btn btn-block"
                 disabled={cart.cartItems.length === 0}
+                onClick={checkoutHandler}
               >
                 Proceed to Checkout
               </Button>

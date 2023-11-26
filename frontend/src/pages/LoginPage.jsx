@@ -64,7 +64,7 @@ const LoginPage = () => {
       </Form>
       <Row className="mt-2">
         <Col>
-          <Link to={"/register"}>New Customer ? login</Link>
+          <Link to={"/register"}>New Customer ? Register</Link>
         </Col>
       </Row>
     </FormLayout>

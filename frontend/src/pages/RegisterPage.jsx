@@ -83,7 +83,7 @@ const RegisterPage = () => {
         </Button>
       </Form>
       <Row className="mt-2">
-        <Link to="/login">Existing Customer ? login</Link>
+        <Link to="/login">Existing Customer ? Login</Link>
       </Row>
     </FormLayout>
   );

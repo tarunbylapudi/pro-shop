@@ -4,7 +4,7 @@ import { decimals } from "../utils/updateCart";
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
-  : { cartItems: [] };
+  : { cartItems: [], shippingAddress:{}, paymentMethod:"PayPal" };
 
 export const cartSlice = createSlice({
   reducers: {
@@ -23,6 +23,14 @@ export const cartSlice = createSlice({
       const id = action.payload
       state.cartItems = state.cartItems.filter((x) => x._id !== id)
       return updateCart(state)
+    },
+    saveShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload
+      return updateCart(state) 
+    },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload
+      return updateCart(state)
     }
   },
   name: "cart",
@@ -30,4 +38,4 @@ export const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const {addToCart, removeFromCart} = cartSlice.actions;
+export const {addToCart, removeFromCart, saveShippingAddress, savePaymentMethod} = cartSlice.actions;
