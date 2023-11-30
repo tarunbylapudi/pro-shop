@@ -12,11 +12,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const EditUsers = () => {
-  const { id: userId } = useParams();
+  const {id} = useParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const { data: user, isLoading, error } = useGetUserByIDQuery(userId);
+  const { data: user, isLoading, error } = useGetUserByIDQuery(id);
 
   useEffect(() => {
     if (user) {
@@ -34,7 +34,7 @@ const EditUsers = () => {
   const updateHandler = async (e) => {
     e.preventDefault();
     try {
-      await updateUser({ userId, name, email, isAdmin }).unwrap();
+      await updateUser({ id, name, email, isAdmin }).unwrap();
       toast.success("User updated successfully");
       navigate("/admin/users")
     } catch (error) {
