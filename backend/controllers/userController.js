@@ -20,7 +20,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isSdmin: user.isAdmin,
+      isAdmin: user.isAdmin,
     });
   } else {
     next(new errorResponse("Invalid credentials!", 401));

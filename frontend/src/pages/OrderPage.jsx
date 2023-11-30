@@ -38,7 +38,7 @@ const OrderPage = () => {
                     {shippingAddress.country}
                   </p>
                   {order.isDelivered ? (
-                    <Message>{order.deliveredAt}</Message>
+                    <Message>Delivered on: {order.deliveredAt?.substring(0,10)}</Message>
                   ) : (
                     <Message variant="danger">
                       Your order is in Transit!
@@ -51,7 +51,7 @@ const OrderPage = () => {
                     <strong>Payment type : </strong> {paymentMethod}
                   </p>
                   {order.isPaid ? (
-                    <Message>{order.paidAt}</Message>
+                    <Message>Paid on: {order.paidAt?.substring(0,10)}</Message>
                   ) : (
                     <Message variant="danger">Not paid!</Message>
                   )}

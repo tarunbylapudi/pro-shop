@@ -19,6 +19,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
   if (orderItems && orderItems.length === 0) {
     return next(new errorResponse("No order items", 400));
   }
+  console.log("asdfdfhg")
   const order = new Order({
     orderItems: orderItems.map((x) => ({
       ...x,
@@ -33,6 +34,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
     shippingPrice,
     totalPrice,
   });
+  console.log(createOrder, "crteatedOrder");
 
   const createdOrder = await order.save();
 
@@ -96,7 +98,7 @@ export const updateOrderToDelivered = asyncHandler(async (req, res, next) => {
     return next(new errorResponse("No Order Found!", 404));
   }
   order.isDelivered = true;
-  order.paidAt = Date.now();
+  order.deliveredAt = Date.now();
   const updatedOrder = await order.save();
   res.status(200).json(updatedOrder);
 });

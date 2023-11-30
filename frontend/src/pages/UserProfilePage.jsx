@@ -5,9 +5,10 @@ import { useUpdateProfileMutation } from "../slices/authApiSlice";
 import { addUserToLocal } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import { useGetOrdersQuery } from "../slices/orderApiSlice";
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import {FaTimes} from 'react-icons/fa'
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import { FaTimes } from "react-icons/fa";
+import { LinkContainer } from "react-router-bootstrap";
 
 const UserProfilePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -16,20 +17,20 @@ const UserProfilePage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isProfileDisabled, setIsProfileDisabled] = useState(true);
-  const {data: orders, isLoading: orderLoading, error} = useGetOrdersQuery();
-  const [updateProfile, {isLoading}] = useUpdateProfileMutation();
+  const { data: orders, isLoading: orderLoading, error } = useGetOrdersQuery();
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const dispatch = useDispatch();
   const updateHandler = async (e) => {
     e.preventDefault();
-    if(password===confirmPassword){
-        try {
-            const profile = await updateProfile({name, email, password}).unwrap()
-            dispatch(addUserToLocal(profile))
-            toast.success("Profile updated successfully")
-            setIsProfileDisabled(true)
-        } catch (error) {
-            toast.error(error?.data?.error)
-        }
+    if (password === confirmPassword) {
+      try {
+        const profile = await updateProfile({ name, email, password }).unwrap();
+        dispatch(addUserToLocal(profile));
+        toast.success("Profile updated successfully");
+        setIsProfileDisabled(true);
+      } catch (error) {
+        toast.error(error?.data?.error);
+      }
     }
   };
   return (
@@ -121,17 +122,24 @@ const UserProfilePage = () => {
                     <td>{order.totalPrice}</td>
                     <td>
                       {order.isPaid ? (
-                        order.paidAt?.substring(0,10)
+                        order.paidAt?.substring(0, 10)
                       ) : (
                         <FaTimes style={{ color: "red" }} />
                       )}
                     </td>
                     <td>
                       {order.isDelivered ? (
-                        order.deliveredAt?.substring(0,10)
+                        order.deliveredAt?.substring(0, 10)
                       ) : (
                         <FaTimes style={{ color: "red" }} />
                       )}
+                    </td>
+                    <td>
+                      <LinkContainer to={`/orders/${order._id}`}>
+                        <Button type="button" className="btn btn-light btn-sm">
+                          Detials
+                        </Button>
+                      </LinkContainer>
                     </td>
                   </tr>
                 ))}
