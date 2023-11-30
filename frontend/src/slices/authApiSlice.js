@@ -24,21 +24,56 @@ const authApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getProfile: builder.query({
-      query:()=>({
+      query: () => ({
         url: `${USERS_URL}/profile`,
-        method:"GET"
+        method: "GET",
       }),
-      keepUnusedDataFor:5
+      keepUnusedDataFor: 5,
     }),
     updateProfile: builder.mutation({
-      query:(body)=>({
+      query: (body) => ({
         url: `${USERS_URL}/profile`,
-        method:"PUT",
-        body
+        method: "PUT",
+        body,
       }),
-    })
+    }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: USERS_URL,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    getUserByID: builder.query({
+      query: (id) => ({
+        url: `${USERS_URL}/${id}`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    updateUserByID: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/${data.id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+    deleteUserByID: builder.mutation({
+      query: (id) => ({
+        url: `${USERS_URL}/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useGetProfileQuery, useUpdateProfileMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useGetAllUsersQuery,
+  useGetUserByIDQuery,
+  useUpdateUserByIDMutation,
+  useDeleteUserByIDMutation,
+} = authApiSlice;

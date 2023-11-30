@@ -110,28 +110,48 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
 //@route GET /api/users
 //@access Private/admin
 const getUsers = asyncHandler(async (req, res, next) => {
-  res.send("getUsers");
+  const users = await User.find({}).select("-password");
+  if (users.length === 0) {
+    return res.status(200).json({ message: "No users found!" });
+  }
+  res.status(200).json(users);
 });
 
 //@desc delate User
 //@route DELETE /api/users/:id
 //@access Private/admin
 const deleteUser = asyncHandler(async (req, res, next) => {
-  res.send("deleteUser");
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    return next(new errorResponse("No user found!", 404));
+  }
+  await User.deleteOne(user._id);
+  res.status(200).json({ message: "user successfully deleted!" });
 });
 
 //@desc get User by ID
 //@route GET /api/users/:id
 //@access Private/admin
 const getUserById = asyncHandler(async (req, res, next) => {
-  res.send("getUserById");
+  const user = await User.findById(req.params.id).select("-password");
+  if (!user) {
+    return next(new errorResponse("No user found!", 404));
+  }
+  res.status(200).json(user);
 });
 
 //@desc update User by ID
 //@route PUT /api/users/:id
 //@access Private/admin
 const updateUserById = asyncHandler(async (req, res, next) => {
-  res.send("updateUserById");
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  }).select("-password");
+  if (!user) {
+    return next(new errorResponse("No user found!", 404));
+  }
+  res.status(200).json(user);
 });
 
 export {

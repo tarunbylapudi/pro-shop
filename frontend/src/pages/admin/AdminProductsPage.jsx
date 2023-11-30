@@ -22,22 +22,24 @@ const AdminProductsPage = () => {
   const [deleteProduct, { isLoading: deleteLoading }] =
     useDeleteProductMutation();
   const deleteHandler = async (productID) => {
-    try {
+    if (window.confirm("Do you want to delete this product")) {
+      try {
         await deleteProduct(productID).unwrap();
         refetch();
         toast.success("product deleted successfully");
-    } catch (error) {
+      } catch (error) {
         toast.error(`${error?.data?.error}`);
+      }
     }
   };
   const [createProduct, { isLoading: addLoading }] = useCreateProductMutation();
   const createHandler = async () => {
     try {
-        await createProduct().unwrap();
-        refetch();
-        toast.success("product added successfully");
+      await createProduct().unwrap();
+      refetch();
+      toast.success("product added successfully");
     } catch (error) {
-        toast.error(`${error?.data?.error}`);
+      toast.error(`${error?.data?.error}`);
     }
   };
 
@@ -64,10 +66,10 @@ const AdminProductsPage = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>Brand</th>
-              <th>Category</th>
-              <th>Price</th>
+              <th>NAME</th>
+              <th>BRAND</th>
+              <th>CATEGORY</th>
+              <th>PRICE</th>
               {/* edit icon */}
               <th></th>
             </tr>
