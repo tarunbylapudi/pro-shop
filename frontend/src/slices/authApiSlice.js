@@ -52,9 +52,9 @@ const authApiSlice = apiSlice.injectEndpoints({
     }),
     updateUserByID: builder.mutation({
       query: (data) => ({
-        url: `${USERS_URL}/${data.id}`,
+        url: `${USERS_URL}/${data.userId}`,
         method: "PUT",
-        body: data,
+        body: { ...data },
       }),
     }),
     deleteUserByID: builder.mutation({
