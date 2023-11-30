@@ -85,6 +85,7 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
 //@route PUT /api/users/profile
 //@access Private
 const updateUserProfile = asyncHandler(async (req, res, next) => {
+  console.log(req.user._id)
   const user = await User.findById(req.user._id);
 
   if (!user) {
