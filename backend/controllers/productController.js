@@ -33,7 +33,7 @@ export const createProduct = asyncHandler(async (req, res, next) => {
   const product = new Product({
     user: req.user._id,
     name: "sample name",
-    image: "img",
+    image: "/images/sample.jpg",
     brand: "brand",
     category: "category",
     description: "desc",
@@ -55,4 +55,28 @@ export const deleteProduct = asyncHandler(async (req, res, next) => {
   }
   await product.deleteOne(product._id);
   res.status(200).json({ message: `${product._id} deleted successfully` });
+});
+
+//@desc update product
+//@route PUT /api/products/:id
+//@access private /admin
+export const updateProduct = asyncHandler(async (req, res, next) => {
+  const { name, price, description, image, brand, category, countInStock } =
+    req.body;
+  const product = await Product.findById(req.params.id);
+  if (!product) {
+    return next(new errorResponse("No product found", 404));
+  }
+
+  product.name = name;
+  product.price = price;
+  product.description = description;
+  product.image = image;
+  product.brand = brand;
+  product.category = category;
+  product.countInStock = countInStock;
+
+  const updatedProduct = await product.save();
+
+  res.status(200).json(updateProduct);
 });

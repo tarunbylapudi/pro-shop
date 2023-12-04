@@ -48,6 +48,7 @@ const AdminProductsPage = () => {
       <Row className="my-4">
         <Col>
           <h2>Products</h2>
+          <Loader />
         </Col>
         <Col className="text-end">
           <Button className="btn-sm" type="button" onClick={createHandler}>
