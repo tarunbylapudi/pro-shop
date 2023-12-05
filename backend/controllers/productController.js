@@ -80,3 +80,42 @@ export const updateProduct = asyncHandler(async (req, res, next) => {
 
   res.status(200).json(updateProduct);
 });
+
+//@desc add a review
+//@route PUT /api/products/:id/reviews
+//@access private /admin
+export const addProductReview = asyncHandler(async (req, res, next) => {
+  const { rating, comment } = req.body;
+  const product = await Product.findById(req.params.id);
+  if (!product) {
+    return next(new errorResponse("No product found", 404));
+  }
+
+  const alreadyReviewed = product.reviews.find(
+    (review) => review.user.toString() === req.user._id.toString()
+  );
+
+  if (alreadyReviewed) {
+    return next(
+      new errorResponse("you have already reviewed this product", 400)
+    );
+  }
+
+  const review = {
+    rating: Number(rating),
+    comment,
+    name: req.user.name,
+    user: req.user._id,
+  };
+
+  product.reviews.push(review);
+
+  product.rating =
+    product.reviews.reduce((a, i) => a + i.rating, 0) / product.reviews.length;
+
+  product.numReviews = product.reviews.length;
+
+  await product.save();
+
+  res.status(200).json({ message: "Review added successfully!" });
+});
