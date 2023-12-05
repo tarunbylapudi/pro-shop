@@ -6,11 +6,17 @@ import errorResponse from "../utils/errorResponse.js";
 //@route POST /api/products
 //@access public
 export const getAllProducts = asyncHandler(async (req, res, next) => {
-  const products = await Product.find({});
+  const page = Number(req.query.pageNumber) || 1;
+  const pageSize = process.env.PAGE_SIZE || 8;
+  const count = await Product.countDocuments();
+
+  const products = await Product.find({})
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
   if (!products) {
     return next(new errorResponse("No Products Found!", 404));
   }
-  res.status(200).json(products);
+  res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 //@desc get single product

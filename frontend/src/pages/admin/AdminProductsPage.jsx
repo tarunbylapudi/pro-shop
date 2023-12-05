@@ -10,14 +10,17 @@ import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { LinkContainer } from "react-router-bootstrap";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import Paginate from "../../components/Paginate";
 
 const AdminProductsPage = () => {
+  const { pageNumber } = useParams();
   const {
-    data: products,
+    data,
     isLoading: productsLoading,
     error,
     refetch,
-  } = useGetProductsQuery();
+  } = useGetProductsQuery({ pageNumber });
 
   const [deleteProduct, { isLoading: deleteLoading }] =
     useDeleteProductMutation();
@@ -63,45 +66,48 @@ const AdminProductsPage = () => {
       ) : error ? (
         <Message variant="danger">{error?.data?.error}</Message>
       ) : (
-        <Table striped hover responsive className="table-sm">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>BRAND</th>
-              <th>CATEGORY</th>
-              <th>PRICE</th>
-              {/* edit icon */}
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
+        <>
+          <Table striped hover responsive className="table-sm">
+            <thead>
               <tr>
-                <td>{product._id}</td>
-                <td>{product.name}</td>
-                <td>{product.brand}</td>
-                <td>{product.category}</td>
-                <td>{product.price}</td>
-                <td>
-                  <LinkContainer to={`/admin/products/${product._id}/edit`}>
-                    <Button type="button" className="btn btn-light btn-sm">
-                      <FaEdit />
-                    </Button>
-                  </LinkContainer>
-                  <Button
-                    type="button"
-                    className="btn btn-light btn-sm ms-2"
-                    onClick={() => deleteHandler(product._id)}
-                  >
-                    <FaTrash />
-                  </Button>
-                  {deleteLoading && <Loader />}
-                </td>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>BRAND</th>
+                <th>CATEGORY</th>
+                <th>PRICE</th>
+                {/* edit icon */}
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {data.products.map((product) => (
+                <tr>
+                  <td>{product._id}</td>
+                  <td>{product.name}</td>
+                  <td>{product.brand}</td>
+                  <td>{product.category}</td>
+                  <td>{product.price}</td>
+                  <td>
+                    <LinkContainer to={`/admin/products/${product._id}/edit`}>
+                      <Button type="button" className="btn btn-light btn-sm">
+                        <FaEdit />
+                      </Button>
+                    </LinkContainer>
+                    <Button
+                      type="button"
+                      className="btn btn-light btn-sm ms-2"
+                      onClick={() => deleteHandler(product._id)}
+                    >
+                      <FaTrash />
+                    </Button>
+                    {deleteLoading && <Loader />}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Paginate page={data.page} pages={data.pages} isAdmin={true} />
+        </>
       )}
     </>
   );
