@@ -37,10 +37,8 @@ export const getAllProducts = asyncHandler(async (req, res, next) => {
     /* prettier-ignore-end */
 
     : {};
-  console.log(keyword);
   const pageSize = process.env.PAGE_SIZE || 8;
   const count = await Product.countDocuments(keyword);
-  console.log(count);
   const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
