@@ -129,14 +129,10 @@ export const addProductReview = asyncHandler(async (req, res, next) => {
 });
 
 //@desc get top rated products
-//@route POST /api/products/:id
+//@route GET /api/products/top
 //@access public
-// export const getProduct = asyncHandler(async (req, res, next) => {
-//   const product = await Product.findById(req.params.id);
-//   if (!product) {
-//     return next(
-//       new errorResponse(`No product found for ID : ${req.params.id}`, 404)
-//     );
-//   }
-//   res.status(200).json(product);
-// });
+export const getTopRatedProducts = asyncHandler(async (req, res, next) => {
+  console.log("sdjkbfuk")
+  const products = await Product.find({}).sort({ rating: -1 }).limit(4);
+  res.status(200).json(products);
+});

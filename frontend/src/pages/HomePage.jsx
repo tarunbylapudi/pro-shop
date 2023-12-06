@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
+import HeadCarosal from "../components/HeadCarosal";
 
 const HomePage = () => {
   const { pageNumber, keyword } = useParams();
@@ -29,6 +30,7 @@ const HomePage = () => {
               Go Back
             </Link>
           )}
+          <HeadCarosal />
           <h1 className="mt-3">Latest Products</h1>
           <Row>
             {data.products.map((product) => (
@@ -37,6 +39,7 @@ const HomePage = () => {
               </Col>
             ))}
             <Paginate page={data.page} pages={data.pages} keyword={keyword} />
+            
           </Row>
         </>
       )}

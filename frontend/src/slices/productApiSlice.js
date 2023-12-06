@@ -10,6 +10,12 @@ export const productApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getTopRatedProducts: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/top`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     getProduct: builder.query({
       query: (id) => ({
         url: `${PRODUCTS_URL}/${id}`,
@@ -60,4 +66,5 @@ export const {
   useImageUploadMutation,
   useEditProductMutation,
   useAddReviewMutation,
+  useGetTopRatedProductsQuery,
 } = productApiSlice;
