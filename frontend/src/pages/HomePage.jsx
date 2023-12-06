@@ -1,15 +1,18 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import ProductCard from "../components/ProductCard";
 import { useGetProductsQuery } from "../slices/productApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
 
 const HomePage = () => {
-  const { pageNumber } = useParams();
-  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
+  const { pageNumber, keyword } = useParams();
+  const { data, isLoading, error } = useGetProductsQuery({
+    pageNumber,
+    keyword,
+  });
 
   return (
     <>
@@ -21,6 +24,11 @@ const HomePage = () => {
         </Message>
       ) : (
         <>
+          {keyword && (
+            <Link className="btn btn-light mt-3" to="/">
+              Go Back
+            </Link>
+          )}
           <h1 className="mt-3">Latest Products</h1>
           <Row>
             {data.products.map((product) => (
@@ -28,7 +36,7 @@ const HomePage = () => {
                 <ProductCard product={product} />
               </Col>
             ))}
-            <Paginate page={data.page} pages={data.pages} />
+            <Paginate page={data.page} pages={data.pages} keyword={keyword} />
           </Row>
         </>
       )}

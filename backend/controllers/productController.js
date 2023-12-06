@@ -7,10 +7,41 @@ import errorResponse from "../utils/errorResponse.js";
 //@access public
 export const getAllProducts = asyncHandler(async (req, res, next) => {
   const page = Number(req.query.pageNumber) || 1;
-  const pageSize = process.env.PAGE_SIZE || 8;
-  const count = await Product.countDocuments();
+  /* prettier-ignore-start */
+  const keyword = req.query.keyword
+    ? {
+      '$or': [
+        {
+          'name': {
+            '$regex': `${req.query.keyword}`, 
+            '$options': 'i'
+          }
+        }, {
+          'description': {
+            '$regex': `${req.query.keyword}`, 
+            '$options': 'i'
+          }
+        }, {
+          'category': {
+            '$regex': `${req.query.keyword}`, 
+            '$options': 'i'
+          }
+        }, {
+          'brand': {
+            '$regex': `${req.query.keyword}`, 
+            '$options': 'i'
+          }
+        }
+      ]
+    }
+    /* prettier-ignore-end */
 
-  const products = await Product.find({})
+    : {};
+  console.log(keyword);
+  const pageSize = process.env.PAGE_SIZE || 8;
+  const count = await Product.countDocuments(keyword);
+  console.log(count);
+  const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   if (!products) {

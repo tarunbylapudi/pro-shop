@@ -6,6 +6,7 @@ import logo from "../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../slices/authApiSlice";
 import { deleteUserFromLocal } from "../slices/authSlice";
+import SearchBox from "./SearchBox";
 
 function Header() {
   const { cartItems, totalCartItems } = useSelector((state) => state.cart);
@@ -36,6 +37,7 @@ function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
           <Navbar.Collapse>
             <Nav className="ms-auto">
+              <SearchBox />
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <FaShoppingCart /> Cart
