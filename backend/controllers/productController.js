@@ -1,42 +1,15 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Product from "../models/ProductModel.js";
 import errorResponse from "../utils/errorResponse.js";
+import searchQuery from "../utils/searchQuery.js";
 
 //@desc get all products
 //@route POST /api/products
 //@access public
 export const getAllProducts = asyncHandler(async (req, res, next) => {
   const page = Number(req.query.pageNumber) || 1;
-  /* prettier-ignore-start */
-  const keyword = req.query.keyword
-    ? {
-      '$or': [
-        {
-          'name': {
-            '$regex': `${req.query.keyword}`, 
-            '$options': 'i'
-          }
-        }, {
-          'description': {
-            '$regex': `${req.query.keyword}`, 
-            '$options': 'i'
-          }
-        }, {
-          'category': {
-            '$regex': `${req.query.keyword}`, 
-            '$options': 'i'
-          }
-        }, {
-          'brand': {
-            '$regex': `${req.query.keyword}`, 
-            '$options': 'i'
-          }
-        }
-      ]
-    }
-    /* prettier-ignore-end */
 
-    : {};
+  const keyword = req.query.keyword ? searchQuery(req.query.keyword) : {};
   const pageSize = process.env.PAGE_SIZE || 8;
   const count = await Product.countDocuments(keyword);
   const products = await Product.find({ ...keyword })
@@ -154,3 +127,16 @@ export const addProductReview = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ message: "Review added successfully!" });
 });
+
+//@desc get top rated products
+//@route POST /api/products/:id
+//@access public
+// export const getProduct = asyncHandler(async (req, res, next) => {
+//   const product = await Product.findById(req.params.id);
+//   if (!product) {
+//     return next(
+//       new errorResponse(`No product found for ID : ${req.params.id}`, 404)
+//     );
+//   }
+//   res.status(200).json(product);
+// });
