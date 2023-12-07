@@ -15,6 +15,7 @@ import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import store from "./store";
 import { Provider } from "react-redux";
+import { HelmetProvider } from "react-helmet-async";
 import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -67,9 +68,11 @@ const routes = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={routes} />
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <RouterProvider router={routes} />
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );
 

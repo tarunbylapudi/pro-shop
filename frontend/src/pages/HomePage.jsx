@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
 import HeadCarosal from "../components/HeadCarosal";
+import Meta from "../components/Meta";
 
 const HomePage = () => {
   const { pageNumber, keyword } = useParams();
@@ -25,6 +26,7 @@ const HomePage = () => {
         </Message>
       ) : (
         <>
+          <Meta />
           {keyword && (
             <Link className="btn btn-light mt-3" to="/">
               Go Back
@@ -39,7 +41,6 @@ const HomePage = () => {
               </Col>
             ))}
             <Paginate page={data.page} pages={data.pages} keyword={keyword} />
-            
           </Row>
         </>
       )}
