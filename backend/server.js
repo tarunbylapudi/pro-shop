@@ -8,6 +8,8 @@ import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import errorHandler from "./middleware/errorHandler.js";
 import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger-output.json" assert { type: "json" };
 
 dotenv.config();
 
@@ -17,6 +19,7 @@ const port = process.env.PORT || 5000;
 connectDB();
 
 const app = express();
+const router = express.Router();
 
 //body parser
 app.use(express.json());
@@ -33,6 +36,9 @@ app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
+
+// swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
