@@ -38,7 +38,9 @@ const OrderPage = () => {
                     {shippingAddress.country}
                   </p>
                   {order.isDelivered ? (
-                    <Message>Delivered on: {order.deliveredAt?.substring(0,10)}</Message>
+                    <Message>
+                      Delivered on: {order.deliveredAt?.substring(0, 10)}
+                    </Message>
                   ) : (
                     <Message variant="danger">
                       Your order is in Transit!
@@ -51,18 +53,18 @@ const OrderPage = () => {
                     <strong>Payment type : </strong> {paymentMethod}
                   </p>
                   {order.isPaid ? (
-                    <Message>Paid on: {order.paidAt?.substring(0,10)}</Message>
+                    <Message>Paid on: {order.paidAt?.substring(0, 10)}</Message>
                   ) : (
                     <Message variant="danger">Not paid!</Message>
                   )}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <h3>Order Items</h3>
-                  {!cartItems ? (
+                  {!order.orderItems ? (
                     <Message variant="danger">Your Cart is Empty!</Message>
                   ) : (
                     <ListGroup variant="flush">
-                      {cartItems.map((item, index) => (
+                      {order.orderItems.map((item, index) => (
                         <ListGroup.Item key={index}>
                           <Row>
                             <Col md={1}>

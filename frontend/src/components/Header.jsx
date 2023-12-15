@@ -6,6 +6,7 @@ import logo from "../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../slices/authApiSlice";
 import { deleteUserFromLocal } from "../slices/authSlice";
+import { clearCart } from "../slices/cartSlice";
 import SearchBox from "./SearchBox";
 
 function Header() {
@@ -20,6 +21,7 @@ function Header() {
     try {
       await logout().unwrap();
       dispatch(deleteUserFromLocal());
+      dispatch(clearCart());
     } catch (error) {
       console.log(error);
     }
