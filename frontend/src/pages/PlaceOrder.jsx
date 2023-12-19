@@ -35,16 +35,12 @@ const PlaceOrder = () => {
         orderItems: cartItems,
         shippingAddress,
         paymentMethod,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        itemsPrice: cart.itemsPrice,
-        totalPrice: cart.totalPrice,
       }).unwrap();
       console.log(order, "order");
       dispatch(clearCart());
       navigate(`/orders/${order._id}`);
     } catch (error) {
-      toast.error(`${error?.data?.error}/sdkjhfuhsuhdgoihosdjpg`);
+      toast.error(`${error?.data?.error}`);
     }
   };
 

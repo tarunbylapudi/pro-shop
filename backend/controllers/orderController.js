@@ -1,30 +1,44 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Order from "../models/OrderModel.js";
 import errorResponse from "../utils/errorResponse.js";
+import Product from "../models/ProductModel.js"
+import { calcPrices } from '../utils/calcPrices.js';
+
 
 //@desc ctreate new order
 //@route POST /api/orders
 //@access public
 export const createOrder = asyncHandler(async (req, res, next) => {
-  const {
-    orderItems,
-    shippingAddress,
-    paymentMethod,
-    itemsPrice,
-    taxPrice,
-    shippingPrice,
-    totalPrice,
-  } = req.body;
+  const { orderItems, shippingAddress, paymentMethod } = req.body;
 
   if (orderItems && orderItems.length === 0) {
-    return next(new errorResponse("No order items", 400));
+    return next(new errorResponse("No order items"), 400);
   }
-  const order = new Order({
-    orderItems: orderItems.map((x) => ({
-      ...x,
-      product: x._id,
+  
+  // get the ordered items from our database
+  const itemsFromDB = await Product.find({
+    _id: { $in: orderItems.map((x) => x._id) },
+  });
+
+  // map over the order items and use the price from our items from database
+  const dbOrderItems = orderItems.map((itemFromClient) => {
+    const matchingItemFromDB = itemsFromDB.find(
+      (itemFromDB) => itemFromDB._id.toString() === itemFromClient._id
+    );
+    return {
+      ...itemFromClient,
+      product: itemFromClient._id,
+      price: matchingItemFromDB.price,
       _id: undefined,
-    })),
+    };
+  });
+
+  // calculate prices
+  const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
+    calcPrices(dbOrderItems);
+
+  const order = new Order({
+    orderItems: dbOrderItems,
     user: req.user._id,
     shippingAddress,
     paymentMethod,
