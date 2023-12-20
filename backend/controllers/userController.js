@@ -1,4 +1,5 @@
 import asyncHandler from "../middleware/asyncHandler.js";
+import Cart from "../models/CartModel.js";
 import User from "../models/UserModel.js";
 import createToken from "../utils/createToken.js";
 import errorResponse from "../utils/errorResponse.js";
@@ -41,17 +42,26 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
   const user = await User.create({ name, email, password });
 
-  if (user) {
-    createToken(res, user._id);
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    });
-  } else {
+  if (!user) {
     return next(new errorResponse("Invalid User data!", 400));
   }
+
+  //create Cart
+  const cart = new Cart()
+  cart.user = user._id;
+  const createdCart = await cart.save()
+  if (!createdCart) {
+    return next(new errorResponse("An Issue Occured, Please try again later!", 500));
+  }
+
+  createToken(res, user._id);
+  res.status(201).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
+
 });
 
 //@desc Logout User

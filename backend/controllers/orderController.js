@@ -2,7 +2,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import Order from "../models/OrderModel.js";
 import errorResponse from "../utils/errorResponse.js";
 import Product from "../models/ProductModel.js"
-import { calcPrices } from '../utils/calcPrices.js';
+import calcPrices from '../utils/calcPrices.js';
 
 
 //@desc ctreate new order
@@ -14,7 +14,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
   if (orderItems && orderItems.length === 0) {
     return next(new errorResponse("No order items"), 400);
   }
-  
+
   // get the ordered items from our database
   const itemsFromDB = await Product.find({
     _id: { $in: orderItems.map((x) => x._id) },

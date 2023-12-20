@@ -8,17 +8,20 @@ import { useLogoutMutation } from "../slices/authApiSlice";
 import { deleteUserFromLocal } from "../slices/authSlice";
 import { clearCart } from "../slices/cartSlice";
 import SearchBox from "./SearchBox";
+import { useSaveCartMutation } from "../slices/cartApiSlice";
 
 function Header() {
-  const { cartItems, totalCartItems } = useSelector((state) => state.cart);
+  const { cartItems, totalCartItems, paymentMethod, shippingAddress } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   const [logout] = useLogoutMutation();
+  const [saveCart, { isLoading: saveCartLoading, error: savecartError }] = useSaveCartMutation()
 
   const logoutHandler = async () => {
     try {
+      await saveCart({ cartItems, shippingAddress, paymentMethod }).unwrap();
       await logout().unwrap();
       dispatch(deleteUserFromLocal());
       dispatch(clearCart());

@@ -18,25 +18,27 @@ const RegisterPage = () => {
 
   const [register, isLoading] = useRegisterMutation();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    password === confirmPassword
-      ? registerFunction()
-      : toast.error("password and confirm password must be same");
+    if (password === confirmPassword) {
+      try {
+        const res = await register({ name, email, password }).unwrap();
+        if (res?.data?._id) {
+          dispatch(addUserToLocal(res.data));
+          navigate("/");
+        }
+      } catch (error) {
+        toast.error(`${error?.data?.error}`);
+      }
+    }
+    else {
+      toast.error("password and confirm password must be same");
+    }
   };
 
   const registerFunction = async () => {
-    try {
-      const res = await register({ name, email, password });
-      console.log(res.data);
-      if (res) {
-        dispatch(addUserToLocal(res.data));
-        navigate("/");
-      }
-    } catch (error) {
-      toast.error(`${error.data.error}`);
-    }
+
   };
 
   return (

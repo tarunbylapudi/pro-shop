@@ -9,7 +9,7 @@ export const createCart = asyncHandler(async (req, res, next) => {
 
     const isCartCreated = await Cart.findOne({ user: req.user._id })
 
-    if (isCartCreated.length === 0) {
+    if (!isCartCreated) {
         const cart = new Cart()
         cart.user = req.user._id
         const createdCart = await cart.save()
@@ -59,7 +59,7 @@ export const saveCart = asyncHandler(async (req, res, next) => {
     const { cartItems, paymentMethod, shippingAddress } = req.body
     const cart = await Cart.findOne({ user: req.user._id });
     cart.currentCart = cartItems.map((item) => ({
-        ...item, Product: item._id, _id: undefined
+        ...item, product: item._id, _id: undefined
     }))
     cart.paymentMethod = paymentMethod
     cart.shippingAddress = { ...shippingAddress };

@@ -149,8 +149,8 @@ const ProductPage = () => {
               ) : (
                 <>
                   <ListGroup variant="flush">
-                    {product.reviews.map((review) => (
-                      <ListGroup.Item>
+                    {product.reviews.map((review, index) => (
+                      <ListGroup.Item key={index}>
                         <strong>{review.name}</strong>
                         <Rating value={review.rating}></Rating>
                         <p>{review.createdAt.substring(0, 10)}</p>

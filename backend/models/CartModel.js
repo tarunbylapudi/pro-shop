@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import calcPrices from "../utils/calcPrices.js";
 
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -20,15 +21,16 @@ const cartSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    shippingAddress: {
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
-    },
-    paymentMethod: { type: String, required: true },
+
     currentCart: [productSchema],
     wishList: [productSchema],
+    shippingAddress: {
+      address: { type: String },
+      city: { type: String },
+      postalCode: { type: String },
+      country: { type: String },
+    },
+    paymentMethod: { type: String, required: true },
     itemsPrice: { type: Number, required: true, default: 0.0 },
     taxPrice: { type: Number, required: true, default: 0.0 },
     shippingPrice: { type: Number, required: true, default: 0.0 },
@@ -37,6 +39,13 @@ const cartSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+cartSchema.pre("save", function () {
+  const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calcPrices(this.currentCart)
+  this.itemsPrice = itemsPrice;
+  this.taxPrice = taxPrice;
+  this.shippingPrice = shippingPrice;
+  this.totalPrice = totalPrice;
+})
 
 const Cart = mongoose.model("Cart", cartSchema);
 

@@ -35,11 +35,10 @@ const LoginPage = () => {
 
   return (
     <FormLayout>
-      <Form onSubmit={submitHandler}>
+      <Form>
         <Form.Group controlId="email" className="my-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
-            required
             type="email"
             placeholder="please enter your email!"
             value={email}
@@ -51,8 +50,7 @@ const LoginPage = () => {
         <Form.Group controlId="password" className="my-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            required
-            type="password"
+            type="text"
             placeholder="please enter your password!"
             value={password}
             onChange={(e) => {
@@ -60,7 +58,7 @@ const LoginPage = () => {
             }}
           ></Form.Control>
         </Form.Group>
-        <Button type="submit" className="btn" >
+        <Button className="btn" onClick={submitHandler}>
           Login
         </Button>
       </Form>
