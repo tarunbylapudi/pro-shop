@@ -58,9 +58,11 @@ export const getCart = asyncHandler(async (req, res, next) => {
 export const saveCart = asyncHandler(async (req, res, next) => {
     const { cartItems, paymentMethod, shippingAddress } = req.body
     const cart = await Cart.findOne({ user: req.user._id });
-    cart.currentCart = cartItems.map((item) => ({
-        ...item, product: item._id, _id: undefined
-    }))
+    cart.cartItems = cartItems.map((item) => ({
+      ...item,
+      product: item._id,
+      _id: undefined,
+    }));
     cart.paymentMethod = paymentMethod
     cart.shippingAddress = { ...shippingAddress };
     const savedCart = await cart.save()

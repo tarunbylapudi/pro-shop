@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../slices/authApiSlice";
 import { addUserToLocal } from "../slices/authSlice";
 import { toast } from "react-toastify";
+import { saveCart } from "../slices/cartSlice";
+import { useGetSavedCartMutation } from "../slices/cartApiSlice";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -21,12 +23,15 @@ const LoginPage = () => {
   }, [user, navigate]);
 
   const [login, { isLoading }] = useLoginMutation();
+  const [getCart, {isLoading:cartLoading}] = useGetSavedCartMutation();
 
   const submitHandler = async (event) => {
     event.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(addUserToLocal(res));
+      const savedCartItems = await getCart().unwrap();
+      dispatch(saveCart(savedCartItems));
       navigate("/register");
     } catch (error) {
       toast.error(`${error.data.error}`);

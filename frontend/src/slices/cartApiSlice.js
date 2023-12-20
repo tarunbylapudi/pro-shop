@@ -3,12 +3,11 @@ import { apiSlice } from "./apiSlice";
 
 const cartApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getSavedCart: builder.query({
+        getSavedCart: builder.mutation({
             query: () => ({
-                url: `${CART_URL}`,
-                method: "GET",
+                url: `${CART_URL}/getCart`,
+                method: "POST",
             }),
-            keepUnusedDataFor: 5,
         }),
         saveCart: builder.mutation({
             query: (cartItems) => ({
@@ -34,4 +33,4 @@ const cartApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useCreateCartMutation, useGetSavedCartQuery, useGetWishListQuery, useSaveCartMutation, useSaveWishListMutation } = cartApiSlice
+export const { useCreateCartMutation, useGetSavedCartMutation, useGetWishListQuery, useSaveCartMutation, useSaveWishListMutation } = cartApiSlice

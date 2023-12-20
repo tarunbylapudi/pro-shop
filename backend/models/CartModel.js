@@ -22,7 +22,7 @@ const cartSchema = new mongoose.Schema(
       ref: "User",
     },
 
-    currentCart: [productSchema],
+    cartItems: [productSchema],
     wishList: [productSchema],
     shippingAddress: {
       address: { type: String },
@@ -30,7 +30,7 @@ const cartSchema = new mongoose.Schema(
       postalCode: { type: String },
       country: { type: String },
     },
-    paymentMethod: { type: String, required: true },
+    paymentMethod: { type: String },
     itemsPrice: { type: Number, required: true, default: 0.0 },
     taxPrice: { type: Number, required: true, default: 0.0 },
     shippingPrice: { type: Number, required: true, default: 0.0 },
@@ -40,7 +40,7 @@ const cartSchema = new mongoose.Schema(
 );
 
 cartSchema.pre("save", function () {
-  const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calcPrices(this.currentCart)
+  const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calcPrices(this.cartItems)
   this.itemsPrice = itemsPrice;
   this.taxPrice = taxPrice;
   this.shippingPrice = shippingPrice;
