@@ -3,7 +3,7 @@ import { createCart, addToWishList, getWishList, getCart, saveCart } from "../co
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router()
-router.route("/").get(protect, getCart).post(protect, saveCart)
+router.route("/").post(protect, saveCart)
 router.route("/getCart").post(protect, getCart);
 router.route("/create").post(protect, createCart);
 router.route("/wishList").get(protect, getWishList).post(protect, addToWishList)

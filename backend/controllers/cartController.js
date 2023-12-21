@@ -1,6 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Cart from "../models/CartModel.js";
 import errorResponse from "../utils/errorResponse.js";
+import addCartItems from "../utils/addcartItems.js";
 
 //@desc createCart
 //@route POST /api/cart/create
@@ -29,7 +30,8 @@ export const addToWishList = asyncHandler(async (req, res, next) => {
         return next(new errorResponse("No Wishlist items!", 400))
     }
     const cart = await Cart.findOne({ user: req.user._id })
-    cart.wishList = wishList.map((item) => ({ ...item, product: item._id, _id: undefined }))
+    cart.wishList = addCartItems(cart.wishList, wishList)
+    cart.wishList = wishList.map((item) => ({ ...item, product: item._id, _id: item._id }))
     const updatedWishList = await cart.save()
     res.status(200).json({ message: "Wishlist added successfully!" })
 })
@@ -44,8 +46,8 @@ export const getWishList = asyncHandler(async (req, res, next) => {
     res.status(200).json({ wishList })
 })
 
-//@desc get Cart
-//@route GET /api/cart
+//@desc getCart
+//@route POST /api/cart
 //@access private
 export const getCart = asyncHandler(async (req, res, next) => {
     const cart = await Cart.findOne({ user: req.user._id })
@@ -56,15 +58,14 @@ export const getCart = asyncHandler(async (req, res, next) => {
 //@route POST /api/cart
 //@access private
 export const saveCart = asyncHandler(async (req, res, next) => {
-    const { cartItems, paymentMethod, shippingAddress } = req.body
+    const { cartItems } = req.body
     const cart = await Cart.findOne({ user: req.user._id });
+    cart.cartItems = addCartItems(cart.cartItems, cartItems)
     cart.cartItems = cartItems.map((item) => ({
-      ...item,
-      product: item._id,
-      _id: undefined,
+        ...item,
+        product: item._id,
+        _id: item._id,
     }));
-    cart.paymentMethod = paymentMethod
-    cart.shippingAddress = { ...shippingAddress };
     const savedCart = await cart.save()
     res.status(200).json(savedCart)
 })

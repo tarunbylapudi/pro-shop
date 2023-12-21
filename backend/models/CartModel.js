@@ -21,31 +21,12 @@ const cartSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-
     cartItems: [productSchema],
     wishList: [productSchema],
-    shippingAddress: {
-      address: { type: String },
-      city: { type: String },
-      postalCode: { type: String },
-      country: { type: String },
-    },
-    paymentMethod: { type: String },
-    itemsPrice: { type: Number, required: true, default: 0.0 },
-    taxPrice: { type: Number, required: true, default: 0.0 },
-    shippingPrice: { type: Number, required: true, default: 0.0 },
-    totalPrice: { type: Number, required: true, default: 0.0 },
+
   },
   { timestamps: true }
 );
-
-cartSchema.pre("save", function () {
-  const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calcPrices(this.cartItems)
-  this.itemsPrice = itemsPrice;
-  this.taxPrice = taxPrice;
-  this.shippingPrice = shippingPrice;
-  this.totalPrice = totalPrice;
-})
 
 const Cart = mongoose.model("Cart", cartSchema);
 

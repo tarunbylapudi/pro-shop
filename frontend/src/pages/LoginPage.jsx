@@ -23,7 +23,7 @@ const LoginPage = () => {
   }, [user, navigate]);
 
   const [login, { isLoading }] = useLoginMutation();
-  const [getCart, {isLoading:cartLoading}] = useGetSavedCartMutation();
+  const [getCart, { isLoading: cartLoading }] = useGetSavedCartMutation();
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -31,8 +31,9 @@ const LoginPage = () => {
       const res = await login({ email, password }).unwrap();
       dispatch(addUserToLocal(res));
       const savedCartItems = await getCart().unwrap();
+
       dispatch(saveCart(savedCartItems));
-      navigate("/register");
+      navigate("/");
     } catch (error) {
       toast.error(`${error.data.error}`);
     }

@@ -24,8 +24,8 @@ const RegisterPage = () => {
     if (password === confirmPassword) {
       try {
         const res = await register({ name, email, password }).unwrap();
-        if (res?.data?._id) {
-          dispatch(addUserToLocal(res.data));
+        if (res) {
+          dispatch(addUserToLocal(res));
           navigate("/");
         }
       } catch (error) {

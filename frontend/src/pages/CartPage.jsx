@@ -33,12 +33,12 @@ const CartPage = () => {
         <h1 className="mt-4">Shopping Cart</h1>
         {cart.cartItems.length === 0 ? (
           <Message>
-            Your cart is empty. 
+            Your cart is empty.
             <Link to="/">Continue Shopping</Link>
           </Message>
         ) : (
           <ListGroup variant="flush">
-            {cartItems.map((item,index) => (
+            {cartItems.map((item, index) => (
               <ListGroup.Item key={index}>
                 <Row>
                   <Col md={2}>
