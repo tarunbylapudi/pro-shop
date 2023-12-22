@@ -26,7 +26,7 @@ const Popup = ({ title, message, openPopup }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">Proceed</Button>
+                    <Button variant="primary" >Proceed</Button>
                 </Modal.Footer>
             </Modal>
         </>
