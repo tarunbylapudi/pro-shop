@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import FormLayout from "../components/FormLayout";
-import { Button, Col, Form, FormGroup, Row } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useRegisterMutation } from "../slices/authApiSlice";
 import { toast } from "react-toastify";
+import FormLayout from "../components/FormLayout";
+import { useRegisterMutation } from "../slices/authApiSlice";
 import { addUserToLocal } from "../slices/authSlice";
 
 const RegisterPage = () => {

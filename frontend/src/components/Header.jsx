@@ -8,21 +8,34 @@ import { useLogoutMutation } from "../slices/authApiSlice";
 import { deleteUserFromLocal } from "../slices/authSlice";
 import { clearCart } from "../slices/cartSlice";
 import SearchBox from "./SearchBox";
-import { useSaveCartMutation, useSaveWishListMutation } from "../slices/cartApiSlice";
+import {
+  useSaveCartMutation,
+  useSaveWishListMutation,
+} from "../slices/cartApiSlice";
 
 function Header() {
-  const { cartItems, totalCartItems, paymentMethod, shippingAddress, wishList } = useSelector((state) => state.cart);
+  const {
+    cartItems,
+    totalCartItems,
+    paymentMethod,
+    shippingAddress,
+    wishList,
+  } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   const [logout] = useLogoutMutation();
-  const [saveCart, { isLoading: saveCartLoading, error: savecartError }] = useSaveCartMutation()
-  const [saveWishList, { isLoading: saveWishListLoading, error: saveWishListError }] = useSaveWishListMutation()
+  const [saveCart, { isLoading: saveCartLoading, error: savecartError }] =
+    useSaveCartMutation();
+  const [
+    saveWishList,
+    { isLoading: saveWishListLoading, error: saveWishListError },
+  ] = useSaveWishListMutation();
 
   const logoutHandler = async () => {
     try {
-      console.log(wishList, "asdf")
+      console.log(wishList, "asdf");
       await saveCart({ cartItems, shippingAddress, paymentMethod }).unwrap();
       await saveWishList({ wishList }).unwrap();
       await logout().unwrap();
@@ -45,7 +58,7 @@ function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
           <Navbar.Collapse>
             <Nav className="ms-auto">
-              <SearchBox />
+              {user && <SearchBox />}
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <FaShoppingCart /> Cart

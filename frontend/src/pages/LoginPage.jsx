@@ -35,7 +35,7 @@ const LoginPage = () => {
       dispatch(saveCart(savedCartItems));
       navigate("/");
     } catch (error) {
-      toast.error(`${error.data.error}`);
+      //toast.error(`${error?.data?.error}`);
     }
   };
 
@@ -56,7 +56,7 @@ const LoginPage = () => {
         <Form.Group controlId="password" className="my-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type="text"
+            type="password"
             placeholder="please enter your password!"
             value={password}
             onChange={(e) => {

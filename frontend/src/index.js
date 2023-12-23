@@ -25,7 +25,7 @@ import PaymentPage from "./pages/PaymentPage";
 import PlaceOrder from "./pages/PlaceOrder";
 import OrderPage from "./pages/OrderPage";
 import UserProfilePage from "./pages/UserProfilePage";
-import AdminRoutes from "./components/AdminRoutes";
+import AdminRoutes from "./components/common/AdminRoutes";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import AdminProductsPage from "./pages/admin/AdminProductsPage";
 import AdminUsersPage from "./pages/admin/AdminUsersPage";

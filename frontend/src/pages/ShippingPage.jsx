@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from "react-router-dom";
 import { saveShippingAddress } from "../slices/cartSlice";
-import CheckoutSteps from "../components/CheckoutSteps";
+import CheckoutSteps from "../components/common/CheckoutSteps";
 
 const ShippingPage = () => {
     const cart = useSelector((state) => state.cart);

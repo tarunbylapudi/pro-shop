@@ -1,7 +1,6 @@
 import { Button, Form } from "react-bootstrap";
 import FormLayout from "../../components/FormLayout";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   useGetUserByIDQuery,
   useUpdateUserByIDMutation,
