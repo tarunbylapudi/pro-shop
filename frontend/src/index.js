@@ -20,7 +20,7 @@ import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ShippingPage from "./pages/ShippingPage";
-import PrivateRoutes from "./components/PrivateRoutes";
+import PrivateRoutes from "./components/common/PrivateRoutes";
 import PaymentPage from "./pages/PaymentPage";
 import PlaceOrder from "./pages/PlaceOrder";
 import OrderPage from "./pages/OrderPage";

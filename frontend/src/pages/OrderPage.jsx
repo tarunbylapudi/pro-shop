@@ -1,14 +1,16 @@
 import React from "react";
-import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
+import { Card, Col, ListGroup, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import Message from "../components/Message";
+import { useParams } from "react-router-dom";
+import Loader from "../components/common/Loader";
+import Message from "../components/common/Message";
+import OrderItemsList from "../components/orders/OrderItemsList";
+import OrderSummary from "../components/orders/OrderSummary";
 import { useGetOrderQuery } from "../slices/orderApiSlice";
-import Loader from "../components/Loader";
 
 const OrderPage = () => {
   const cart = useSelector((state) => state.cart);
-  const { cartItems, shippingAddress, paymentMethod } = cart;
+  const { shippingAddress, paymentMethod } = cart;
   const { id } = useParams();
   const { data: order, isLoading, err: orderErr } = useGetOrderQuery(id);
 
@@ -63,65 +65,14 @@ const OrderPage = () => {
                   {!order.orderItems ? (
                     <Message variant="danger">Your Cart is Empty!</Message>
                   ) : (
-                    <ListGroup variant="flush">
-                      {order.orderItems.map((item, index) => (
-                        <ListGroup.Item key={index}>
-                          <Row>
-                            <Col md={1}>
-                              <Image
-                                src={item.image}
-                                alt={item.image}
-                                fluid
-                                rounded
-                              />
-                            </Col>
-                            <Col>
-                              <Link to={`/product/${item._id}`}>
-                                {item.name}
-                              </Link>
-                            </Col>
-                            <Col md={4}>
-                              ${item.price} x {item.qty} = $
-                              {(item.price * item.qty).toFixed(2)}
-                            </Col>
-                          </Row>
-                        </ListGroup.Item>
-                      ))}
-                    </ListGroup>
+                    <OrderItemsList items={order.orderItems} />
                   )}
                 </ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={4}>
               <Card className="mt-5">
-                <ListGroup variant="flush">
-                  <h3 className="px-3 pt-3">Order Summary</h3>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Items Price</Col>
-                      <Col>${order.itemsPrice}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>shipping Price</Col>
-                      <Col>${order.shippingPrice}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Tax Price</Col>
-                      <Col>${order.taxPrice}</Col>
-                    </Row>
-                  </ListGroup.Item>
-
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Total Price</Col>
-                      <Col>${order.totalPrice}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                </ListGroup>
+                <OrderSummary order={order} />
               </Card>
             </Col>
           </Row>

@@ -63,15 +63,11 @@ export const getCart = asyncHandler(async (req, res, next) => {
 //@route POST /api/cart
 //@access private
 export const saveCart = asyncHandler(async (req, res, next) => {
-  console.log("1");
   const { cartItems } = req.body;
-  console.log("2");
   if (cartItems.length === 0) {
     return res.status(200).json({ message: "Cart Saved" });
   }
-  console.log("3");
   const cart = await Cart.findOne({ user: req.user._id });
-  console.log("4");
   cart.cartItems = addCartItems(cart.cartItems, cartItems);
   cart.cartItems = cartItems.map((item) => ({
     ...item,

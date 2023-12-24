@@ -6,12 +6,12 @@ import {
 } from "../../slices/productApiSlice";
 import { Button, Col, Row, Table } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import Loader from "../../components/Loader";
-import Message from "../../components/Message";
+import Loader from "../../components/common/Loader";
+import Message from "../../components/common/Message";
 import { LinkContainer } from "react-router-bootstrap";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import Paginate from "../../components/Paginate";
+import Paginate from "../../components/common/Paginate";
 
 const AdminProductsPage = () => {
   const { pageNumber } = useParams();

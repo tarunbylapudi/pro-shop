@@ -3,7 +3,7 @@ import { Button, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import FormLayout from "../components/FormLayout";
+import FormLayout from "../components/common/FormLayout";
 import { useRegisterMutation } from "../slices/authApiSlice";
 import { addUserToLocal } from "../slices/authSlice";
 
@@ -16,7 +16,7 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register, isLoading] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -31,14 +31,9 @@ const RegisterPage = () => {
       } catch (error) {
         toast.error(`${error?.data?.error}`);
       }
-    }
-    else {
+    } else {
       toast.error("password and confirm password must be same");
     }
-  };
-
-  const registerFunction = async () => {
-
   };
 
   return (

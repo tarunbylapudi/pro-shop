@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { addToCart, removeFromWishList } from "../slices/cartSlice";
+import { addToCart, removeFromWishList } from "../../slices/cartSlice";
 import { useDispatch } from "react-redux";
 
 const WishListCard = ({ product }) => {

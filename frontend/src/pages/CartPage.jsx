@@ -11,8 +11,8 @@ import {
 } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
 import { addToCart, removeFromCart, addToWishList } from "../slices/cartSlice";
-import Message from "../components/Message";
-import WishListCard from "../components/WishListCard";
+import Message from "../components/common/Message";
+import WishListCard from "../components/common/WishListCard";
 
 const CartPage = () => {
   const navigate = useNavigate();

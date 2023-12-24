@@ -1,13 +1,13 @@
 import React from "react";
-import { Button, Col, Row } from "react-bootstrap";
-import ProductCard from "../components/ProductCard";
-import { useGetProductsQuery } from "../slices/productApiSlice";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
+import { Col, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import Paginate from "../components/Paginate";
-import HeadCarosal from "../components/HeadCarosal";
-import Meta from "../components/Meta";
+import HeadCarosal from "../components/common/HeadCarosal";
+import Loader from "../components/common/Loader";
+import Message from "../components/common/Message";
+import Meta from "../components/common/Meta";
+import Paginate from "../components/common/Paginate";
+import ProductCard from "../components/common/ProductCard";
+import { useGetProductsQuery } from "../slices/productApiSlice";
 
 const HomePage = () => {
   const { pageNumber, keyword } = useParams();

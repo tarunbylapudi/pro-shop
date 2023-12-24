@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormLayout from "../components/FormLayout";
+import FormLayout from "../components/common/FormLayout";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from "react-router-dom";

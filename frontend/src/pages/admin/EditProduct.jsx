@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import FormLayout from "../../components/FormLayout";
+import FormLayout from "../../components/common/FormLayout";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import {
   useEditProductMutation,
   useGetProductQuery,
   useImageUploadMutation,
 } from "../../slices/productApiSlice";
-import Loader from "../../components/Loader";
+import Loader from "../../components/common/Loader";
 import { toast } from "react-toastify";
-import Message from "../../components/Message";
+import Message from "../../components/common/Message";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const EditProduct = () => {

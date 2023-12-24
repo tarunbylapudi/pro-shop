@@ -2,16 +2,17 @@ import React from "react";
 import { Navbar, Nav, Container, Badge, NavDropdown } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { useLogoutMutation } from "../slices/authApiSlice";
-import { deleteUserFromLocal } from "../slices/authSlice";
-import { clearCart } from "../slices/cartSlice";
-import SearchBox from "./SearchBox";
+import { useLogoutMutation } from "../../slices/authApiSlice";
+import { deleteUserFromLocal } from "../../slices/authSlice";
+import { clearCart } from "../../slices/cartSlice";
+
 import {
   useSaveCartMutation,
   useSaveWishListMutation,
-} from "../slices/cartApiSlice";
+} from "../../slices/cartApiSlice";
+import SearchBox from "./SearchBox";
 
 function Header() {
   const {

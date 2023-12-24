@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import FormLayout from "../components/FormLayout";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import FormLayout from "../components/common/FormLayout";
 import { useLoginMutation } from "../slices/authApiSlice";
 import { addUserToLocal } from "../slices/authSlice";
-import { toast } from "react-toastify";
-import { saveCart } from "../slices/cartSlice";
 import { useGetSavedCartMutation } from "../slices/cartApiSlice";
+import { saveCart } from "../slices/cartSlice";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");

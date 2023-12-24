@@ -4,7 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { toast } from "react-toastify";
 import { useUpdateOrderToDeliveredMutation } from "../../slices/orderApiSlice";
-import Loader from "../Loader";
+import Loader from "../common/Loader";
 
 const OrdersList = ({ orders, children, refetch, admin = false }) => {
   const [updateOrderToDelivered, { isLoading: deliveryLoading }] =

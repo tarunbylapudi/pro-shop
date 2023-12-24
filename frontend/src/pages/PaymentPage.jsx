@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import FormLayout from "../components/FormLayout";
+import FormLayout from "../components/common/FormLayout";
 import { Button, Col, Form } from "react-bootstrap";
 import CheckoutSteps from "../components/common/CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
