@@ -1,7 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Cart from "../models/CartModel.js";
 import errorResponse from "../utils/errorResponse.js";
-import addCartItems from "../utils/addcartItems.js";
+import addCartItems from "../utils/addCartItems.js";
 
 //@desc createCart
 //@route POST /api/cart/create
