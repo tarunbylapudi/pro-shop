@@ -3,19 +3,30 @@ import Cart from "../models/CartModel.js";
 import User from "../models/UserModel.js";
 import createToken from "../utils/createToken.js";
 import errorResponse from "../utils/errorResponse.js";
+import crypto from "crypto"
+import sendMail from "../utils/sendMail.js";
 
 //@desc Login User & get token
 //@route POST /api/users/login
 //@access public
 const loginUser = asyncHandler(async (req, res, next) => {
+
+  console.log("first")
   const { email, password } = req.body;
+  console.log("second")
+
   const user = await User.findOne({ email });
+  console.log("third")
+
 
   if (!user) {
     return next(new errorResponse("User not registered", 401));
   }
+  console.log("four")
+  console.log(password)
 
   if (await user.matchPassword(password)) {
+    console.log("five")
     createToken(res, user._id);
     res.status(200).json({
       _id: user._id,
@@ -24,6 +35,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
       isAdmin: user.isAdmin,
     });
   } else {
+    console.log("six")
     next(new errorResponse("Invalid credentials!", 401));
   }
 });
@@ -47,11 +59,13 @@ const registerUser = asyncHandler(async (req, res, next) => {
   }
 
   //create Cart
-  const cart = new Cart()
+  const cart = new Cart();
   cart.user = user._id;
-  const createdCart = await cart.save()
+  const createdCart = await cart.save();
   if (!createdCart) {
-    return next(new errorResponse("An Issue Occured, Please try again later!", 500));
+    return next(
+      new errorResponse("An Issue Occured, Please try again later!", 500)
+    );
   }
 
   createToken(res, user._id);
@@ -61,7 +75,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
     email: user.email,
     isAdmin: user.isAdmin,
   });
-
 });
 
 //@desc Logout User
@@ -164,6 +177,96 @@ const updateUserById = asyncHandler(async (req, res, next) => {
   res.status(200).json(user);
 });
 
+// @desc      forgot password
+// @route     POST /api/v1/auth/forgotPassword
+// @access    public
+const forgotPassword = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return next(
+      new errorResponse(`No user found with email ${req.body.email}`, 400)
+    );
+  }
+
+  //get reset token
+  const resetToken = user.getResetPasswordToken();
+
+  console.log("resetToken :", resetToken);
+
+  await user.save({ validateBeforeSave: false });
+
+  //create reset url
+  const resetURL = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/auth/resetPassword/${resetToken}`;
+
+  const message = `you are reciving this mail for resetting your password, to do so please send a PUT request to ${resetURL}`;
+
+  //send mail
+
+  try {
+    await sendMail({ email: user.email, subject: "reset password", message });
+    return res.status(200).json({ success: true, data: "email sent" });
+  } catch (error) {
+    console.log(error);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(new errorResponse("email could not be sent!", 500));
+  }
+
+  res.status(200).json({ success: true, data: user });
+});
+
+// @desc      reset password
+// @route     PUT /api/v1/auth/resetPassword/:resetToken
+// @access    public
+const resetPassword = asyncHandler(async (req, res, next) => {
+  //get hashed token
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.params.resetToken)
+    .digest("hex");
+
+  //get the user
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new errorResponse("Invalid Token!", 500));
+  }
+
+  //set new password
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+
+  createToken(res, user._id);
+  res.status(200).json({ message: "Password reset successful!" });
+});
+
+// @desc      update password
+// @route     PUT /api/v1/auth/updatePassword
+// @access    private
+const updatePassword = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  //check for current password
+  if (!(await user.matchPassword(req.body.currentPassword))) {
+    return next(new errorResponse("password is incorrect!", 401));
+  }
+
+  user.password = req.body.newPassword;
+  await user.save();
+
+  createToken(res, user._id);
+  res.status(200).json({ message: "password updated successfully!" });
+});
+
 export {
   loginUser,
   registerUser,
@@ -174,4 +277,7 @@ export {
   deleteUser,
   getUserById,
   updateUserById,
+  forgotPassword,
+  resetPassword,
+  updatePassword
 };
