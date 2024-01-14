@@ -3,31 +3,36 @@ import Cart from "../models/CartModel.js";
 import User from "../models/UserModel.js";
 import createToken from "../utils/createToken.js";
 import errorResponse from "../utils/errorResponse.js";
-import crypto from "crypto"
+import crypto from "crypto";
 import sendMail from "../utils/sendMail.js";
+import { loginPath } from "../mailTamplets/paths.js";
 
 //@desc Login User & get token
 //@route POST /api/users/login
 //@access public
 const loginUser = asyncHandler(async (req, res, next) => {
-
-  console.log("first")
   const { email, password } = req.body;
-  console.log("second")
 
   const user = await User.findOne({ email });
-  console.log("third")
-
 
   if (!user) {
     return next(new errorResponse("User not registered", 401));
   }
-  console.log("four")
-  console.log(password)
 
   if (await user.matchPassword(password)) {
-    console.log("five")
     createToken(res, user._id);
+    //send mail
+    try {
+      await sendMail(
+        { email: user.email, subject: "Login Successfull" },
+        loginPath
+      );
+      return res.status(200).json({ success: true, data: "email sent" });
+    } catch (error) {
+      console.log(error);
+      return next(new errorResponse("email could not be sent!", 500));
+    }
+
     res.status(200).json({
       _id: user._id,
       name: user.name,
@@ -35,7 +40,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
       isAdmin: user.isAdmin,
     });
   } else {
-    console.log("six")
     next(new errorResponse("Invalid credentials!", 401));
   }
 });
@@ -279,5 +283,5 @@ export {
   updateUserById,
   forgotPassword,
   resetPassword,
-  updatePassword
+  updatePassword,
 };
