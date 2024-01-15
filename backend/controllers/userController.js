@@ -27,7 +27,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
         { email: user.email, subject: "Login Successfull" },
         loginPath
       );
-      return res.status(200).json({ success: true, data: "email sent" });
     } catch (error) {
       console.log(error);
       return next(new errorResponse("email could not be sent!", 500));
@@ -43,6 +42,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
     next(new errorResponse("Invalid credentials!", 401));
   }
 });
+
+
 
 //@desc register User & get token
 //@route POST /api/users

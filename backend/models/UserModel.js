@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import crypto from "crypto"
+import crypto from "crypto";
+import generateOTP from "../utils/generateOTP.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -24,6 +25,8 @@ const userSchema = new mongoose.Schema(
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+    otp: String,
+    otpExpire: Date,
     isAdmin: { type: Boolean, required: true, default: false },
   },
   { timestamps: true }
@@ -60,7 +63,23 @@ userSchema.methods.getResetPasswordToken = function () {
   return resetToken;
 };
 
+userSchema.methods.getOTP = function () {
+  //create OTP
+  const otp = generateOTP(5);
 
+  //set expire time
+  this.otp = otp;
+  this.otpExpire = Date.now() + 5 * 60 * 1000;
+
+  return otp;
+};
+
+userSchema.methods.verifyOTP = function (enteredOTP) {
+  console.log(this.otp);
+  console.log(enteredOTP, "e");
+  console.log(enteredOTP === this.otp);
+  return enteredOTP === this.otp;
+};
 
 const User = mongoose.model("User", userSchema);
 
