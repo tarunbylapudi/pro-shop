@@ -28,21 +28,21 @@ const CartPage = () => {
   const moveToWishListHandler = (item, qty) => {
     dispatch(removeFromCart(item._id));
     dispatch(addToWishList({ ...item, qty }));
-  }
+  };
   const checkoutHandler = () => {
-    navigate('/shipping');
-  }
+    navigate("/shipping");
+  };
   return (
     <Row>
       <Col md={8}>
         <h1 className="mt-4">Shopping Cart</h1>
-        {cart.cartItems.length === 0 ? (
-          <Message>
-            Your cart is empty.
-            <Link to="/">Continue Shopping</Link>
-          </Message>
-        ) : (
-          <>
+        <Row>
+          {cart.cartItems.length === 0 ? (
+            <Message>
+              Your cart is empty.
+              <Link to="/">Continue Shopping</Link>
+            </Message>
+          ) : (
             <ListGroup variant="flush">
               {cartItems.map((item, index) => (
                 <ListGroup.Item key={index}>
@@ -74,8 +74,12 @@ const CartPage = () => {
                         />
                       </Button>
                     </Col>
-                    <Col >
-                      <Button variant="light" type="button" onClick={() => moveToWishListHandler(item, item.qty)}>
+                    <Col>
+                      <Button
+                        variant="light"
+                        type="button"
+                        onClick={() => moveToWishListHandler(item, item.qty)}
+                      >
                         Move to WishList
                       </Button>
                     </Col>
@@ -83,18 +87,24 @@ const CartPage = () => {
                 </ListGroup.Item>
               ))}
             </ListGroup>
-            {wishList.length > 0 && <ListGroup variant="flush">
-              {<h1 className="my-2">Wishlist</h1>}
+          )}
+        </Row>
+        <Row>
+          {<h1 className="my-2">Wishlist</h1>}
+          {wishList.length === 0 ? (
+            <Message> No Items in wishList</Message>
+          ) : (
+            <ListGroup variant="flush">
               <Row>
                 {wishList.map((item, index) => (
-
                   <Col key={item._id} sm={12} md={6} lg={4} xl={4}>
                     <WishListCard product={item} />
                   </Col>
-
-                ))} </Row>
-            </ListGroup>}</>
-        )}
+                ))}{" "}
+              </Row>
+            </ListGroup>
+          )}
+        </Row>
       </Col>
       <Col md={4}>
         <Card className="mt-5">
