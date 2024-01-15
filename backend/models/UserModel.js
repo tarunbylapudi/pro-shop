@@ -75,9 +75,6 @@ userSchema.methods.getOTP = function () {
 };
 
 userSchema.methods.verifyOTP = function (enteredOTP) {
-  console.log(this.otp);
-  console.log(enteredOTP, "e");
-  console.log(enteredOTP === this.otp);
   return enteredOTP === this.otp;
 };
 

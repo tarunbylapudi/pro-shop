@@ -9,7 +9,6 @@ import sendMail from "../utils/sendMail.js";
 //@access public
 const loginWithOTP = asyncHandler(async (req, res, next) => {
   const { otp } = req.body;
-  console.log(typeof otp);
 
   const user = await User.findOne({
     otp,
