@@ -43,8 +43,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-
-
 //@desc register User & get token
 //@route POST /api/users
 //@access public
@@ -206,7 +204,7 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
     "host"
   )}/api/v1/auth/resetPassword/${resetToken}`;
 
-  const message = `you are reciving this mail for resetting your password, to do so please send a PUT request to ${resetURL}`;
+  const message = `you are reciving this mail for resetting your password, your security token is ${resetToken}`;
 
   //send mail
 

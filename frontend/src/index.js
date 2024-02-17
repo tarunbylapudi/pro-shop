@@ -31,6 +31,10 @@ import AdminProductsPage from "./pages/admin/AdminProductsPage";
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
 import EditUsers from "./pages/admin/EditUsers";
 import EditProduct from "./pages/admin/EditProduct";
+import SignInPage from "./pages/SignInPage";
+import LoginWithOTP from "./pages/LoginWithOTP";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +46,10 @@ const routes = createBrowserRouter(
       <Route path="/product/:id" element={<ProductPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/login/OTP" element={<LoginWithOTP />} />
+      <Route path="/forgotPassword" element={<ForgotPassword />} />
+      <Route path="/resetPassword" element={<ResetPasswordPage />} />
+      <Route path="/signUp" element={<SignInPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="" element={<PrivateRoutes />}>
         <Route path="/shipping" element={<ShippingPage />} />
