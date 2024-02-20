@@ -1,5 +1,5 @@
 import { apiSlice } from "./apiSlice";
-import { USERS_URL } from "../constants";
+import { AUTH_URL, USERS_URL } from "../constants";
 
 const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,6 +10,35 @@ const authApiSlice = apiSlice.injectEndpoints({
         body,
       }),
     }),
+    generateOTP: builder.mutation({
+      query: (body) => ({
+        url: `${AUTH_URL}/generate/otp`,
+        method: "POST",
+        body,
+      }),
+    }),
+    generateSecurityToken: builder.mutation({
+      query: (body) => ({
+        url: `${USERS_URL}/forgotPassword`,
+        method: "POST",
+        body,
+      }),
+    }),
+    validateOtpAndLogin: builder.mutation({
+      query: (body) => ({
+        url: `${AUTH_URL}/login/otp`,
+        method: "POST",
+        body,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: ({ password, token }) => ({
+        url: `${USERS_URL}/resetPassword/${token}`,
+        method: "PUT",
+        body: { password },
+      }),
+    }),
+
     logout: builder.mutation({
       query: () => ({
         url: `${USERS_URL}/logout`,
@@ -76,4 +105,8 @@ export const {
   useGetUserByIDQuery,
   useUpdateUserByIDMutation,
   useDeleteUserByIDMutation,
+  useGenerateOTPMutation,
+  useValidateOtpAndLoginMutation,
+  useGenerateSecurityTokenMutation,
+  useResetPasswordMutation,
 } = authApiSlice;
