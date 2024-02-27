@@ -13,41 +13,8 @@ import {
   useSaveWishListMutation,
 } from "../../../slices/cartApiSlice";
 import SearchBox from "../elements/SearchBox";
-import {
-  AppBar,
-  Avatar,
-  Box,
-  CssBaseline,
-  IconButton,
-  Menu,
-  MenuItem,
-  Slide,
-  Toolbar,
-  Tooltip,
-  Typography,
-  useScrollTrigger,
-} from "@mui/material";
 
 function Header() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-  const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
   const {
     cartItems,
     totalCartItems,
@@ -81,7 +48,7 @@ function Header() {
 
   return (
     <>
-      <header>
+      <header data-testid="header">
         <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
           <Container>
             <LinkContainer to="/">
