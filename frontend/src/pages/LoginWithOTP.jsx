@@ -19,8 +19,8 @@ import { saveCart } from "../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetSavedCartMutation } from "../slices/cartApiSlice";
-import Alert from "../components/common/UI/Alert";
-import Link from "../components/common/UI/Link";
+import Alert from "../components/common/elements/Alert";
+import Link from "../components/common/elements/Link";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");

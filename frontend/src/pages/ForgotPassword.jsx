@@ -11,8 +11,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Alert from "../components/common/UI/Alert";
-import Link from "../components/common/UI/Link";
+import Alert from "../components/common/elements/Alert";
+import Link from "../components/common/elements/Link";
 import { useGenerateSecurityTokenMutation } from "../slices/authApiSlice";
 
 export default function ForgotPassword() {

@@ -3,7 +3,7 @@ import { Button, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import FormLayout from "../components/common/FormLayout";
+import FormLayout from "../components/common/layout/FormLayout";
 import { useRegisterMutation } from "../slices/authApiSlice";
 import { addUserToLocal } from "../slices/authSlice";
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useUpdateProfileMutation } from "../../slices/authApiSlice";
 import { addUserToLocal } from "../../slices/authSlice";
-import Loader from "../common/Loader";
+import Loader from "../common/elements/Loader";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);

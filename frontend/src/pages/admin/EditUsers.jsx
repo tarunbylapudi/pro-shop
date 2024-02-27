@@ -1,12 +1,12 @@
 import { Button, Form } from "react-bootstrap";
-import FormLayout from "../../components/common/FormLayout";
+import FormLayout from "../../components/common/layout/FormLayout";
 import { useEffect, useState } from "react";
 import {
   useGetUserByIDQuery,
   useUpdateUserByIDMutation,
 } from "../../slices/authApiSlice";
-import Message from "../../components/common/Message";
-import Loader from "../../components/common/Loader";
+import Message from "../../components/common/elements/Message";
+import Loader from "../../components/common/elements/Loader";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 

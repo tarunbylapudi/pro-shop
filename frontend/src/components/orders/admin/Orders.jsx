@@ -1,7 +1,7 @@
 import React from "react";
 import { useGetAllOrdersQuery } from "../../../slices/orderApiSlice";
-import Loader from "../../common/Loader";
-import Message from "../../common/Message";
+import Loader from "../../common/elements/Loader";
+import Message from "../../common/elements/Message";
 import OrdersList from "../OrdersList";
 
 const Orders = () => {

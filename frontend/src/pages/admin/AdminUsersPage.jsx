@@ -4,8 +4,8 @@ import {
 } from "../../slices/authApiSlice";
 import React from "react";
 import { Button, Table } from "react-bootstrap";
-import Loader from "../../components/common/Loader";
-import Message from "../../components/common/Message";
+import Loader from "../../components/common/elements/Loader";
+import Message from "../../components/common/elements/Message";
 import { LinkContainer } from "react-router-bootstrap";
 import { FaEdit, FaTimes, FaCheck, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";

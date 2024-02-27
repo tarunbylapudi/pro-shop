@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import FormLayout from "../components/common/FormLayout";
+import FormLayout from "../components/common/layout/FormLayout";
 import { Button, Col, Form } from "react-bootstrap";
-import CheckoutSteps from "../components/common/CheckoutSteps";
+import CheckoutSteps from "../components/common/elements/CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { savePaymentMethod } from "../slices/cartSlice";
@@ -26,7 +26,7 @@ const PaymentPage = () => {
 
   return (
     <FormLayout>
-      <CheckoutSteps step1 step2 step3 />
+      <CheckoutSteps step="Payment" />
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="payment" className="my-4">
           <Form.Label as="legend" className="my-2">

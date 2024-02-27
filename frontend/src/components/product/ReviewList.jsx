@@ -1,7 +1,7 @@
 import React from "react";
-import Message from "../common/Message";
+import Message from "../common/elements/Message";
 import { ListGroup } from "react-bootstrap";
-import Rating from "../common/Rating";
+import Rating from "../common/elements/Rating";
 
 const ReviewList = ({ reviews }) => {
   return (

@@ -1,31 +1,33 @@
 import React, { useState } from "react";
-import FormLayout from "../components/common/FormLayout";
+import FormLayout from "../components/common/layout/FormLayout";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../slices/cartSlice";
-import CheckoutSteps from "../components/common/CheckoutSteps";
+import CheckoutSteps from "../components/common/elements/CheckoutSteps";
 
 const ShippingPage = () => {
-    const cart = useSelector((state) => state.cart);
-    const { shippingAddress } = cart;
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress } = cart;
 
-    const [address, setAddress] = useState(shippingAddress?.address||"");
-    const [city, setCity] = useState(shippingAddress?.city||"");
-    const [postalCode, setPostalCode] = useState(shippingAddress?.postalCode||"");
-    const [country, setCountry] = useState(shippingAddress?.country||"");
+  const [address, setAddress] = useState(shippingAddress?.address || "");
+  const [city, setCity] = useState(shippingAddress?.city || "");
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress?.postalCode || ""
+  );
+  const [country, setCountry] = useState(shippingAddress?.country || "");
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate(); 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const saveActionHandler=(event) => {
-        event.preventDefault()
-        dispatch(saveShippingAddress({address,city,postalCode,country}))
-        navigate("/payment")
-    }
+  const saveActionHandler = (event) => {
+    event.preventDefault();
+    dispatch(saveShippingAddress({ address, city, postalCode, country }));
+    navigate("/payment");
+  };
   return (
     <FormLayout>
-      <CheckoutSteps step1 step2></CheckoutSteps>
+      <CheckoutSteps step="Shipping"></CheckoutSteps>
       <h1 className="my-4">Shipping</h1>
       <Form onSubmit={saveActionHandler}>
         <Form.Group controlId="address" className="my-2">

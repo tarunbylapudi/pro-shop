@@ -11,10 +11,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Loader from "../components/common/Loader";
-import Message from "../components/common/Message";
-import Meta from "../components/common/Meta";
-import Rating from "../components/common/Rating";
+import Loader from "../components/common/elements/Loader";
+import Message from "../components/common/elements/Message";
+import Meta from "../components/common/layout/Meta";
+import Rating from "../components/common/elements/Rating";
 import AddReview from "../components/product/AddReview";
 import ReviewList from "../components/product/ReviewList";
 import { addToCart } from "../slices/cartSlice";

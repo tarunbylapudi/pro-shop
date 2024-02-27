@@ -1,12 +1,12 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import HeadCarosal from "../components/common/HeadCarosal";
-import Loader from "../components/common/Loader";
-import Message from "../components/common/Message";
-import Meta from "../components/common/Meta";
-import Paginate from "../components/common/Paginate";
-import ProductCard from "../components/common/ProductCard";
+import HeadCarosal from "../components/common/elements/HeadCarosal";
+import Loader from "../components/common/elements/Loader";
+import Message from "../components/common/elements/Message";
+import Meta from "../components/common/layout/Meta";
+import Paginate from "../components/common/elements/Paginate";
+import ProductCard from "../components/common/elements/ProductCard";
 import { useGetProductsQuery } from "../slices/productApiSlice";
 
 const HomePage = () => {

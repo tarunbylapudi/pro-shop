@@ -20,12 +20,12 @@ import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ShippingPage from "./pages/ShippingPage";
-import PrivateRoutes from "./components/common/PrivateRoutes";
+import PrivateRoutes from "./components/common/routes/PrivateRoutes";
 import PaymentPage from "./pages/PaymentPage";
 import PlaceOrder from "./pages/PlaceOrder";
 import OrderPage from "./pages/OrderPage";
 import UserProfilePage from "./pages/UserProfilePage";
-import AdminRoutes from "./components/common/AdminRoutes";
+import AdminRoutes from "./components/common/routes/AdminRoutes";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import AdminProductsPage from "./pages/admin/AdminProductsPage";
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
@@ -49,7 +49,7 @@ const routes = createBrowserRouter(
       <Route path="/login/OTP" element={<LoginWithOTP />} />
       <Route path="/forgotPassword" element={<ForgotPassword />} />
       <Route path="/resetPassword" element={<ResetPasswordPage />} />
-      <Route path="/signUp" element={<SignInPage />} />
+      <Route path="/signIn" element={<SignInPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="" element={<PrivateRoutes />}>
         <Route path="/shipping" element={<ShippingPage />} />
