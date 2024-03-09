@@ -4,6 +4,7 @@ import { useGetTopRatedProductsQuery } from "../../../slices/productApiSlice";
 import Loader from "./Loader";
 import Message from "./Message";
 import { Link } from "react-router-dom";
+import arrayBufferToBase64 from "../../../utils/arrayBufferToBase64";
 
 const HeadCarosal = () => {
   const { data, isLoading, error } = useGetTopRatedProductsQuery();
@@ -18,7 +19,7 @@ const HeadCarosal = () => {
           {data.map((item) => (
             <Carousel.Item key={item._id} >
               <Link to={`/product/${item._id}`} className="d-flex  justify-content-center">
-                <Image width={400} height={50} src={item.image} fluid />
+                <Image width={400} height={50} src={arrayBufferToBase64(item?.img?.data?.data)} fluid />
                 <Carousel.Caption className="carousel-caption">
                   <h3>
                     {item.name} (${item.price})
