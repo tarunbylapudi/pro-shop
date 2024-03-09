@@ -33,19 +33,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "coverage": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/components/**/*.{js,jsx}",
-      "src/components/**/*.{types,stories,constants,test,spec}.{js,jsx}"
     ]
   },
   "browserslist": {
@@ -60,7 +53,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "msw": "^2.2.1"
-  }
+  "devDependencies": {}
 }

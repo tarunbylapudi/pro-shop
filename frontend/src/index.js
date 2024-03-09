@@ -36,10 +36,7 @@ import LoginWithOTP from "./pages/LoginWithOTP";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
-if (process.env.NODE_ENV === "development") {
-  const { serviceWorker } = require("./mocks/browser");
-  serviceWorker.start();
-}
+
 
 const routes = createBrowserRouter(
   createRoutesFromElements(

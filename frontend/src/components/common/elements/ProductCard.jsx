@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
+import arrayBufferToBase64 from "../../../utils/arrayBufferToBase64";
 
 const ProductCard = ({ product }) => {
   return (
     <>
       <Card className="my-3 p-3 rounded">
         <Link to={`/product/${product._id}`}>
-          <Card.Img src={product.image} variant="top"></Card.Img>
+          <Card.Img
+            src={arrayBufferToBase64(product?.img?.data?.data)}
+            variant="top"
+          ></Card.Img>
         </Link>
         <Card.Body>
           <Link to={`/product/${product._id}`}>

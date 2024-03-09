@@ -35,6 +35,7 @@ const EditProduct = () => {
     try {
       const formData = new FormData();
       formData.append("image", e.target.files[0]);
+      formData.append("productId", id);
       const res = await uploadImage(formData).unwrap();
       setImage(res?.image.replace(/\\/g, "/"));
       toast.success("Image Uploaded successfully");
