@@ -11,6 +11,10 @@ const ProductCard = ({ product }) => {
         <Link to={`/product/${product._id}`}>
           <Card.Img
             src={arrayBufferToBase64(product?.img?.data?.data)}
+            style={{
+              aspectRatio: "1/1",
+              objectFit: "contain",
+            }}
             variant="top"
           ></Card.Img>
         </Link>
