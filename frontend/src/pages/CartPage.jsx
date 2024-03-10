@@ -13,6 +13,7 @@ import { FaTrash } from "react-icons/fa";
 import { addToCart, removeFromCart, addToWishList } from "../slices/cartSlice";
 import Message from "../components/common/elements/Message";
 import WishListCard from "../components/common/elements/WishListCard";
+import arrayBufferToBase64 from "../utils/arrayBufferToBase64";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const CartPage = () => {
                 <ListGroup.Item key={index}>
                   <Row>
                     <Col md={2}>
-                      <Image src={item.image} alt={item.image} fluid rounded />
+                      <Image src={arrayBufferToBase64(item?.img?.data?.data)} alt={item.image} fluid rounded />
                     </Col>
                     <Col md={4}>
                       <Link to={`/product/${item._id}`}>{item.name}</Link>
