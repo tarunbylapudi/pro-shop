@@ -6,6 +6,8 @@ import ProductImage from "../models/ImageModel.js";
 import Product from "../models/ProductModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 
+import { protect, admin } from "../middleware/authMiddleware.js";
+
 const router = Router();
 
 const storage = multer.diskStorage({
@@ -34,23 +36,40 @@ function fileFilter(req, file, cb) {
 const upload = multer({ storage, fileFilter });
 
 router.post(
-  "/",
+  "/productImage",
+  protect,
   upload.single("image"),
   asyncHandler(async (req, res, next) => {
     const product = await Product.findById(req.body.productId);
-    product.img.data = fs.readFileSync(req.file.path);
-    product.img.contentType = `image/${path
+    product.image.data = fs.readFileSync(req.file.path);
+    product.image.contentType = `image/${path
       .extname(req.file.originalname)
       .toLowerCase()
       .replace(".", "")}`;
-    product.save();
-    // const productImg = new ProductImage();
-    // productImg.ProductImages.push({ data: fs.readFileSync(req.file.path) });
-    // const savedImg = productImg.save();
+    await product.save();
 
     res.json({
-      message: "Image uploaded successfully",
+      message: "Product Image uploaded successfully",
       image: `/${req.file.path}`,
+      product,
+    });
+  })
+);
+
+router.post(
+  "/profileImage",
+  protect,
+  upload.single("image"),
+  asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user._id);
+    user.image.data = fs.readFileSync(req.file.path);
+    user.image.contentType = `image/${path
+      .extname(req.file.originalname)
+      .toLowerCase()
+      .replace(".", "")}`;
+    await user.save();
+    res.json({
+      message: "Profile Image uploaded successfully",
     });
   })
 );

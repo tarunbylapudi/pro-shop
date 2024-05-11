@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Please add a password"],
       minlength: 6,
     },
+    image: { data: Buffer, contentType: String },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     otp: String,

@@ -15,7 +15,6 @@ const EditProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
@@ -36,8 +35,7 @@ const EditProduct = () => {
       const formData = new FormData();
       formData.append("image", e.target.files[0]);
       formData.append("productId", id);
-      const res = await uploadImage(formData).unwrap();
-      setImage(res?.image.replace(/\\/g, "/"));
+      await uploadImage(formData).unwrap();
       toast.success("Image Uploaded successfully");
     } catch (error) {
       toast.error(`${error?.data?.error}`);
@@ -48,7 +46,6 @@ const EditProduct = () => {
     setName(getProduct?.name || "");
     setCategory(getProduct?.category || "");
     setBrand(getProduct?.brand || "");
-    setImage(getProduct?.image || "");
     setCountInStock(getProduct?.countInStock || 0);
     setPrice(getProduct?.price || 0);
     setDescription(getProduct?.description || "");
@@ -63,7 +60,6 @@ const EditProduct = () => {
           name,
           category,
           brand,
-          image,
           countInStock,
           price,
           description,
@@ -125,14 +121,6 @@ const EditProduct = () => {
             </Form.Group>
             <Form.Group controlId="image">
               <Form.Label>Image</Form.Label>
-              <Form.Control
-                className="mb-1"
-                type="text"
-                placeholder="Image path"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                disabled
-              ></Form.Control>
               <Form.Control
                 type="file"
                 onChange={uploadFileHandler}

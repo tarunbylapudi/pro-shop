@@ -12,7 +12,7 @@ const OrderItemsList = ({ items }) => {
             <Row>
               <Col md={1}>
                 <Image
-                  src={arrayBufferToBase64(item?.img?.data?.data)}
+                  src={arrayBufferToBase64(item?.image?.data?.data)}
                   alt={item.image}
                   fluid
                   rounded
