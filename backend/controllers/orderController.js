@@ -120,6 +120,7 @@ export const updateOrderToDelivered = asyncHandler(async (req, res, next) => {
 //@access private/admin
 export const getAllOrders = asyncHandler(async (req, res, next) => {
   const orders = await Order.find({}).populate("user", "name email");
+  await Order.aggregate([{$match:{}}])
   if (orders.length === 0) {
     return next(new errorResponse("No Orders Found!", 404));
   }
