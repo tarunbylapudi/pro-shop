@@ -118,8 +118,8 @@ export const addProductReview = asyncHandler(async (req, res, next) => {
 
   product.reviews.push(review);
 
-  product.rating =
-    product.reviews.reduce((a, i) => a + i.rating, 0) / product.reviews.length;
+  // product.rating =
+  //   product.reviews.reduce((a, i) => a + i.rating, 0) / product.reviews.length;
 
   product.numReviews = product.reviews.length;
 
@@ -132,7 +132,6 @@ export const addProductReview = asyncHandler(async (req, res, next) => {
 //@route GET /api/products/top
 //@access public
 export const getTopRatedProducts = asyncHandler(async (req, res, next) => {
-  console.log("sdjkbfuk")
   const products = await Product.find({}).sort({ rating: -1 }).limit(4);
   res.status(200).json(products);
 });
