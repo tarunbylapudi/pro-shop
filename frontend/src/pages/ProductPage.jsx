@@ -71,7 +71,7 @@ const ProductPage = () => {
           <Meta title={product.name} />
           <Row>
             <Col md={5}>
-              <Image src={arrayBufferToBase64(product?.img?.data?.data)} alt={product.name} fluid />
+              <Image src={arrayBufferToBase64(product?.image?.data?.data)} alt={product.name} fluid />
             </Col>
             <Col md={4}>
               <ListGroup variant="flush">

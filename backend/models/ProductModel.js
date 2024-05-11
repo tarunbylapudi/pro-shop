@@ -22,8 +22,7 @@ const productSchema = new mongoose.Schema(
       ref: "User",
     },
     name: { type: String, required: true },
-    image: { type: String, required: true },
-    img: { data: Buffer, contentType: String },
+    image: { data: Buffer, contentType: String },
     brand: { type: String, required: true },
     category: { type: String, required: true },
     description: { type: String, required: true },
@@ -44,7 +43,6 @@ productSchema.statics.getAvgRating = async function () {
     { $unwind: "$reviews" },
     { $group: { _id: "$_id", averageRating: { $avg: "$reviews.rating" } } },
   ]);
-  console.log(obj,"obj")
   try {
     await this.findByIdAndUpdate(this._id, {
       rating: obj[0].averageRating,

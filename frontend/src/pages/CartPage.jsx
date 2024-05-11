@@ -49,7 +49,7 @@ const CartPage = () => {
                 <ListGroup.Item key={index}>
                   <Row>
                     <Col md={2}>
-                      <Image src={arrayBufferToBase64(item?.img?.data?.data)} alt={item.image} fluid rounded />
+                      <Image src={arrayBufferToBase64(item?.image?.data?.data)} alt={item.image} fluid rounded />
                     </Col>
                     <Col md={4}>
                       <Link to={`/product/${item._id}`}>{item.name}</Link>

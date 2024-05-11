@@ -25,7 +25,7 @@ const WishListCard = ({ product }) => {
               aspectRatio: "1/1",
               objectFit: "contain",
             }}
-            src={arrayBufferToBase64(product?.img?.data?.data)}
+            src={arrayBufferToBase64(product?.image?.data?.data)}
             variant="top"
           ></Card.Img>
         </Link>
