@@ -14,6 +14,7 @@ import { addToCart, removeFromCart, addToWishList } from "../slices/cartSlice";
 import Message from "../components/common/elements/Message";
 import WishListCard from "../components/common/elements/WishListCard";
 import arrayBufferToBase64 from "../utils/arrayBufferToBase64";
+import { rupee } from "../utils";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -49,12 +50,17 @@ const CartPage = () => {
                 <ListGroup.Item key={index}>
                   <Row>
                     <Col md={2}>
-                      <Image src={arrayBufferToBase64(item?.image?.data?.data)} alt={item.image} fluid rounded />
+                      <Image
+                        src={arrayBufferToBase64(item?.image?.data?.data)}
+                        alt={item.image}
+                        fluid
+                        rounded
+                      />
                     </Col>
                     <Col md={4}>
                       <Link to={`/product/${item._id}`}>{item.name}</Link>
                     </Col>
-                    <Col md={1}>${item.price}</Col>
+                    <Col md={1}>{rupee.format(item.price)}</Col>
                     <Col md={1}>
                       <Form.Control
                         as="select"
@@ -114,7 +120,7 @@ const CartPage = () => {
               <h2>SubTotal ({cart.totalCartItems}) Items</h2>
             </ListGroup.Item>
             <ListGroup.Item>
-              <h4>${cart.itemsPrice || 0}</h4>
+              <h4>{rupee.format(cart.itemsPrice) || 0}</h4>
             </ListGroup.Item>
             <ListGroup.Item>
               <Button

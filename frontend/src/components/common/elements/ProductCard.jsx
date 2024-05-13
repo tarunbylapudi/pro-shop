@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
 import arrayBufferToBase64 from "../../../utils/arrayBufferToBase64";
+import { rupee } from "../../../utils";
 
 const ProductCard = ({ product }) => {
   return (
@@ -30,7 +31,7 @@ const ProductCard = ({ product }) => {
               text={`${product.numReviews} Reviews`}
             />
           </Card.Text>
-          <Card.Text as="h3">${product.price}</Card.Text>
+          <Card.Text as="h3">{rupee.format(product.price)}</Card.Text>
         </Card.Body>
       </Card>
     </>

@@ -23,6 +23,7 @@ import {
   useGetProductQuery,
 } from "../slices/productApiSlice";
 import arrayBufferToBase64 from "../utils/arrayBufferToBase64";
+import { rupee } from "../utils";
 
 const ProductPage = () => {
   const [qty, setQty] = useState(1);
@@ -84,7 +85,7 @@ const ProductPage = () => {
                     text={`${product.numReviews} reviews`}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                <ListGroup.Item>Price: {rupee.format(product.price)}</ListGroup.Item>
                 <ListGroup.Item>
                   Description: {product.description}
                 </ListGroup.Item>
@@ -96,7 +97,7 @@ const ProductPage = () => {
                   <ListGroup.Item>
                     <Row>
                       <Col>Price:</Col>
-                      <Col>${product.price}</Col>
+                      <Col>{rupee.format(product.price)}</Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { addToCart, removeFromWishList } from "../../../slices/cartSlice";
 import { useDispatch } from "react-redux";
 import arrayBufferToBase64 from "../../../utils/arrayBufferToBase64";
+import { rupee } from "../../../utils";
 
 const WishListCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const WishListCard = ({ product }) => {
           <Card.Text as="div">
             {product.qty <= product.countInStock ? "In Stock" : "Out of Stock"}
           </Card.Text>
-          <Card.Text as="h3">${product.price}</Card.Text>
+          <Card.Text as="h3">{rupee.format(product.price)}</Card.Text>
         </Card.Body>
         <Card.Footer>
           <Row>

@@ -50,8 +50,6 @@ router.post(
 
     res.json({
       message: "Product Image uploaded successfully",
-      image: `/${req.file.path}`,
-      product,
     });
   })
 );
