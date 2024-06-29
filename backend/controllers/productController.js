@@ -68,8 +68,7 @@ export const deleteProduct = asyncHandler(async (req, res, next) => {
 //@route PUT /api/products/:id
 //@access private /admin
 export const updateProduct = asyncHandler(async (req, res, next) => {
-  const { name, price, description, brand, category, countInStock } =
-    req.body;
+  const { name, price, description, brand, category, countInStock } = req.body;
   const product = await Product.findById(req.params.id);
   if (!product) {
     return next(new errorResponse("No product found", 404));

@@ -5,6 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { toast } from "react-toastify";
 import { useUpdateOrderToDeliveredMutation } from "../../slices/orderApiSlice";
 import Loader from "../common/elements/Loader";
+import { rupee } from "../../utils";
 
 const OrdersList = ({ orders, children, refetch, admin = false }) => {
   const [updateOrderToDelivered, { isLoading: deliveryLoading }] =
@@ -35,7 +36,7 @@ const OrdersList = ({ orders, children, refetch, admin = false }) => {
           <tr>
             <td>{order._id}</td>
             <td>{order.createdAt.substring(0, 10)}</td>
-            <td>{order.totalPrice}</td>
+            <td>{rupee.format(order.totalPrice)}</td>
             <td>
               {order.isPaid ? (
                 order.paidAt?.substring(0, 10)

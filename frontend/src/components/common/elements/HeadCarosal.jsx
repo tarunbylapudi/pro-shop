@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import Message from "./Message";
 import { Link } from "react-router-dom";
 import arrayBufferToBase64 from "../../../utils/arrayBufferToBase64";
+import { rupee } from "../../../utils";
 
 const HeadCarosal = () => {
   const { data, isLoading, error } = useGetTopRatedProductsQuery();
@@ -22,7 +23,7 @@ const HeadCarosal = () => {
                 <Image width={400} height={50} src={arrayBufferToBase64(item?.image?.data?.data)} fluid />
                 <Carousel.Caption className="carousel-caption">
                   <h3>
-                    {item.name} (${item.price})
+                    {item.name} ({rupee.format(item.price)})
                   </h3>
                 </Carousel.Caption>
               </Link>

@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Image, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import arrayBufferToBase64 from "../../utils/arrayBufferToBase64";
+import { rupee } from "../../utils";
 
 const OrderItemsList = ({ items }) => {
   return (
@@ -22,8 +23,8 @@ const OrderItemsList = ({ items }) => {
                 <Link to={`/product/${item._id}`}>{item.name}</Link>
               </Col>
               <Col md={4}>
-                ${item.price} x {item.qty} = $
-                {(item.price * item.qty).toFixed(2)}
+                {rupee.format(item.price)} x {item.qty} = 
+                {rupee.format((item.price * item.qty).toFixed(2))}
               </Col>
             </Row>
           </ListGroup.Item>

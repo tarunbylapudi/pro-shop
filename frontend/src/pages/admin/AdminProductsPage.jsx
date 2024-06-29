@@ -12,6 +12,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import Paginate from "../../components/common/elements/Paginate";
+import { rupee } from "../../utils";
 
 const AdminProductsPage = () => {
   const { pageNumber } = useParams();
@@ -81,12 +82,12 @@ const AdminProductsPage = () => {
             </thead>
             <tbody>
               {data.products.map((product) => (
-                <tr>
+                <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>{product.brand}</td>
                   <td>{product.category}</td>
-                  <td>{product.price}</td>
+                  <td>{rupee.format(product.price)}</td>
                   <td>
                     <LinkContainer to={`/admin/products/${product._id}/edit`}>
                       <Button type="button" className="btn btn-light btn-sm">
