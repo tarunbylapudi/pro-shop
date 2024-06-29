@@ -7,6 +7,7 @@ import Message from "../components/common/elements/Message";
 import OrderItemsList from "../components/orders/OrderItemsList";
 import OrderSummary from "../components/orders/OrderSummary";
 import { useGetOrderQuery } from "../slices/orderApiSlice";
+import Button from '@mui/material/Button';
 
 const OrderPage = () => {
   const cart = useSelector((state) => state.cart);
@@ -71,6 +72,7 @@ const OrderPage = () => {
               </ListGroup>
             </Col>
             <Col md={4}>
+              
               <Card className="mt-5">
                 <OrderSummary order={order} />
               </Card>

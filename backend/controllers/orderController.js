@@ -1,9 +1,15 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Order from "../models/OrderModel.js";
 import errorResponse from "../utils/errorResponse.js";
-import Product from "../models/ProductModel.js"
-import calcPrices from '../utils/calcPrices.js';
-
+import Product from "../models/ProductModel.js";
+import calcPrices from "../utils/calcPrices.js";
+import createInvoice, {
+  generateCustomerInformation,
+  generateFooter,
+  generateHeader,
+  generateInvoiceTable,
+} from "../utils/invoice/createInvoice.js";
+import { invoice } from "../utils/invoice/invoice.js";
 
 //@desc ctreate new order
 //@route POST /api/orders
@@ -120,9 +126,32 @@ export const updateOrderToDelivered = asyncHandler(async (req, res, next) => {
 //@access private/admin
 export const getAllOrders = asyncHandler(async (req, res, next) => {
   const orders = await Order.find({}).populate("user", "name email");
-  await Order.aggregate([{$match:{}}])
+  await Order.aggregate([{ $match: {} }]);
   if (orders.length === 0) {
     return next(new errorResponse("No Orders Found!", 404));
   }
   res.status(200).json(orders);
+});
+
+//@desc  get order Invoice
+//@route GET /api/orders/:id/invoice
+//@access private
+export const generateOrderInvoice = asyncHandler(async (req, res, next) => {
+  const order = await Order.findById(req.params.id).populate(
+    "user",
+    "name email"
+  );
+  console.log(req.user,"order")
+
+  console.log(order,"order")
+  let doc = createInvoice(order, "invoice.pdf");
+  generateHeader(doc);
+  generateCustomerInformation(doc, order);
+  generateInvoiceTable(doc, order);
+  generateFooter(doc);
+  res.setHeader("Content-Type", "application/pdf");
+  doc.pipe(res);
+  doc.end();
+  console.log("asdfghjk");
+  doc.pipe(fs.createWriteStream("invoice.pdf"));
 });
