@@ -74,7 +74,7 @@ const OrderPage = () => {
             <Col md={4}>
               
               <Card className="mt-5">
-                <OrderSummary order={order} />
+                <OrderSummary orderId={id} order={order} />
               </Card>
             </Col>
           </Row>

@@ -136,22 +136,54 @@ export const getAllOrders = asyncHandler(async (req, res, next) => {
 //@desc  get order Invoice
 //@route GET /api/orders/:id/invoice
 //@access private
-export const generateOrderInvoice = asyncHandler(async (req, res, next) => {
-  const order = await Order.findById(req.params.id).populate(
-    "user",
-    "name email"
-  );
-  console.log(req.user,"order")
+// export const generateOrderInvoice = asyncHandler(async (req, res, next) => {
+//   const order = await Order.findById(req.params.id).populate(
+//     "user",
+//     "name email"
+//   );
+//   let doc = createInvoice(order, "invoice.pdf");
+//   generateHeader(doc);
+//   generateCustomerInformation(doc, order);
+//   generateInvoiceTable(doc, order);
+//   generateFooter(doc);
+//   res.setHeader("Content-Type", "application/pdf");
+//   doc.pipe(res);
+//   doc.end();
+//   doc.pipe(fs.createWriteStream("invoice.pdf"));
+// });
 
-  console.log(order,"order")
-  let doc = createInvoice(order, "invoice.pdf");
-  generateHeader(doc);
-  generateCustomerInformation(doc, order);
-  generateInvoiceTable(doc, order);
-  generateFooter(doc);
-  res.setHeader("Content-Type", "application/pdf");
-  doc.pipe(res);
-  doc.end();
-  console.log("asdfghjk");
-  doc.pipe(fs.createWriteStream("invoice.pdf"));
+//@desc  Get order Invoice
+//@route GET /api/orders/:id/invoice
+//@access private
+export const generateOrderInvoice = asyncHandler(async (req, res, next) => {
+  try {
+    // Fetch the order by ID and populate the user information
+    const order = await Order.findById(req.params.id).populate("user", "name email");
+
+    // Create a new PDF document
+    const doc = createInvoice(order, "invoice.pdf");
+
+    // Generate the PDF content
+    generateHeader(doc);
+    generateCustomerInformation(doc, order);
+    generateInvoiceTable(doc, order);
+    generateFooter(doc);
+
+    // Set response headers for PDF download
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename=invoice_${order._id}.pdf`);
+
+    // Pipe the PDF to the response
+    doc.pipe(res);
+
+    // Finalize the PDF document
+    doc.end();
+
+    // Optionally save a copy of the PDF to the filesystem
+    // Uncomment if you need to save the file locally
+    // doc.pipe(fs.createWriteStream(`./invoices/invoice_${order._id}.pdf`));
+  } catch (error) {
+    next(error); // Pass errors to the error handling middleware
+  }
 });
+
