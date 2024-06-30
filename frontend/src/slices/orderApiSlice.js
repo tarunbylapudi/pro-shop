@@ -31,10 +31,10 @@ const orderApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
-    getOrderInvoice: builder.mutation({
+    getOrderInvoice: builder.query({
       query: (orderID) => ({
         url: `${ORDERS_URL}/${orderID}/invoice`,
-        method: "POST",
+        method: "GET",
       }),
     }),
     updateOrderToDelivered: builder.mutation({
@@ -52,5 +52,5 @@ export const {
   useGetOrdersQuery,
   useGetAllOrdersQuery,
   useUpdateOrderToDeliveredMutation,
-  useGetOrderInvoiceMutation,
+  useGetOrderInvoiceQuery,
 } = orderApiSlice;

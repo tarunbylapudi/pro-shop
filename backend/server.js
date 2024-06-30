@@ -5,13 +5,14 @@ import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
-import cartRoutes from "./routes/cartRoutes.js"
+import cartRoutes from "./routes/cartRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import errorHandler from "./middleware/errorHandler.js";
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger-output.json" assert { type: "json" };
+import cors from "cors";
 
 dotenv.config();
 
@@ -23,9 +24,12 @@ connectDB();
 const app = express();
 const router = express.Router();
 
+//cprs config
+app.use(cors());
+
 //body parser
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 //cookie parser
 app.use(cookieParser());
@@ -36,7 +40,6 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/auth", authRoutes);
-
 
 // swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -58,4 +61,8 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server started running in ${process.env.NODE_ENV} mode on port ${port}`));
+app.listen(port, () =>
+  console.log(
+    `Server started running in ${process.env.NODE_ENV} mode on port ${port}`
+  )
+);
