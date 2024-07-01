@@ -10,6 +10,9 @@ import createInvoice, {
   generateInvoiceTable,
 } from "../utils/invoice/createInvoice.js";
 import { invoice } from "../utils/invoice/invoice.js";
+import { buffer } from "stream/consumers";
+import sendMail from "../utils/sendMail.js";
+import getStream from "get-stream";
 
 //@desc ctreate new order
 //@route POST /api/orders
@@ -158,7 +161,10 @@ export const getAllOrders = asyncHandler(async (req, res, next) => {
 export const generateOrderInvoice = asyncHandler(async (req, res, next) => {
   try {
     // Fetch the order by ID and populate the user information
-    const order = await Order.findById(req.params.id).populate("user", "name email");
+    const order = await Order.findById(req.params.id).populate(
+      "user",
+      "name email"
+    );
 
     // Create a new PDF document
     const doc = createInvoice(order, "invoice.pdf");
@@ -171,13 +177,39 @@ export const generateOrderInvoice = asyncHandler(async (req, res, next) => {
 
     // Set response headers for PDF download
     res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", `attachment; filename=invoice_${order._id}.pdf`);
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=invoice_${order._id}.pdf`
+    );
 
     // Pipe the PDF to the response
     doc.pipe(res);
 
     // Finalize the PDF document
     doc.end();
+
+    // Convert PDF document to buffer
+
+    const attachment = await buffer(doc);
+
+    const message = `kindly find the invoivce for you order ${order._id} in attachments`;
+
+    // Send the email with the PDF attachment
+    await sendMail(
+      {
+        email: order.user.email,
+        subject: `Invoice for order ${order._id}`,
+        message: message,
+      },
+      "", // No HTML template path
+      [
+        {
+          filename: `invoice_${order._id}.pdf`,
+          content: attachment,
+          contentType: "application/pdf",
+        },
+      ]
+    );
 
     // Optionally save a copy of the PDF to the filesystem
     // Uncomment if you need to save the file locally
@@ -186,4 +218,3 @@ export const generateOrderInvoice = asyncHandler(async (req, res, next) => {
     next(error); // Pass errors to the error handling middleware
   }
 });
-

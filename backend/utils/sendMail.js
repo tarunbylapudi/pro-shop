@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import fs from "fs";
 
-const sendMail = async (options, htmlPath) => {
+const sendMail = async (options, htmlPath, attachments = []) => {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
@@ -23,6 +23,7 @@ const sendMail = async (options, htmlPath) => {
     subject: options.subject,
     text: options.message,
     html: htmlContent,
+    attachments: attachments,
   };
 
   const info = await transporter.sendMail(message);
