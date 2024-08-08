@@ -9,6 +9,11 @@ import OrderItemsList from "../components/orders/OrderItemsList";
 import OrderSummary from "../components/orders/OrderSummary";
 import { clearCart } from "../slices/cartSlice";
 import { useCreateOrderMutation } from "../slices/orderApiSlice";
+import {
+  useGetRzpKayQuery,
+  useCheckoutMutation,
+  usePaymentVerificationMutation,
+} from "../slices/PaymentApiSlice";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();
@@ -30,6 +35,16 @@ const PlaceOrder = () => {
     }
   }, [cartItems, shippingAddress, paymentMethod, navigate]);
   const [createOrder, { isLoading }] = useCreateOrderMutation();
+  const {
+    data: razorapyKeyData,
+    isLoading: rzpKeyLoading,
+    error,
+  } = useGetRzpKayQuery();
+
+  const [checkout, { isLoading: checkoutLoading }] = useCheckoutMutation();
+
+  const [paymentVerfication, { isLoading: paymentVerficationLoading }] =
+    usePaymentVerificationMutation();
 
   const createOrderHandler = async () => {
     try {
@@ -38,9 +53,45 @@ const PlaceOrder = () => {
         shippingAddress,
         paymentMethod,
       }).unwrap();
-      console.log(order, "order");
-      dispatch(clearCart());
-      navigate(`/orders/${order._id}`);
+
+      const rzpOrder = await checkout({ orderID: order._id }).unwrap();
+
+      // console.log(rzpOrder)
+      let payment = {};
+
+      const options = {
+        key: razorapyKeyData.key,
+        amount: rzpOrder.amount,
+        currency: "INR",
+        name: "Pro Shop",
+        description: "Buy Something",
+        image: "https://avatars.githubusercontent.com/u/96648429?s=96&v=4",
+        order_id: rzpOrder.id,
+        handler: async function (response) {
+          const res = await paymentVerfication({
+            orderID: order._id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          }).unwrap();
+
+          dispatch(clearCart());
+          navigate(`/orders/${order._id}`);
+        },
+        prefill: {
+          name: "Tarun Bylapudi",
+          email: "tarun@gmail.com",
+          contact: "1234567890",
+        },
+        notes: {
+          address: "razorapy official",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      const razor = new window.Razorpay(options);
+      razor.open();
     } catch (error) {
       toast.error(`${error?.data?.error}`);
     }
