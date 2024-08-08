@@ -28,10 +28,15 @@ const orderSchema = new mongoose.Schema(
     },
     paymentMethod: { type: String, required: true },
     paymentResult: {
-      id: String,
-      status: String,
-      update_time: String,
-      email_address: String,
+      razorpay_order_id: {
+        type: String,
+      },
+      razorpay_payment_id: {
+        type: String,
+      },
+      razorpay_signature: {
+        type: String,
+      },
     },
     itemsPrice: { type: Number, required: true, default: 0.0 },
     taxPrice: { type: Number, required: true, default: 0.0 },
