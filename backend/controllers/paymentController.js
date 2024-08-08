@@ -18,9 +18,7 @@ const ctreatePaymentOrder = asyncHandler(async (req, res, next) => {
   //   key1: "value3",
   //   key2: "value2",
   // },
-  console.log(req.body.orderID);
   const order = await Order.findById(req.body.orderID);
-  console.log(order);
 
   const options = {
     amount: Number(order.totalPrice * 100),
