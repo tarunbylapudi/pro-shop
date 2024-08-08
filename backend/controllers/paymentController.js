@@ -9,12 +9,6 @@ import Order from "../models/OrderModel.js";
 
 dotenv.config();
 
-//rezorPay instance
-const instance = new razorpay({
-  key_id: process.env.RZP_KEY,
-  key_secret: process.env.RZP_SECRET,
-});
-
 //@desc create paymentOrderID
 //@route POST /api/payment/checkout
 //@access private
@@ -24,9 +18,7 @@ const ctreatePaymentOrder = asyncHandler(async (req, res, next) => {
   //   key1: "value3",
   //   key2: "value2",
   // },
-  console.log(req.body.orderID);
   const order = await Order.findById(req.body.orderID);
-  console.log(order);
 
   const options = {
     amount: Number(order.totalPrice * 100),
@@ -34,6 +26,11 @@ const ctreatePaymentOrder = asyncHandler(async (req, res, next) => {
   };
 
   try {
+    //rezorPay instance
+    const instance = new razorpay({
+      key_id: process.env.RZP_KEY,
+      key_secret: process.env.RZP_SECRET,
+    });
     const rzpOrder = await instance.orders.create(options);
 
     res.status(200).json({
